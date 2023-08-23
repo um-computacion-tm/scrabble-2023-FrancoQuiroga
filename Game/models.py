@@ -4,8 +4,6 @@ class Tile:
     def __init__(self, letter, value):
         self.letter = letter
         self.value = value
-
-
 class BagTiles:
     def __init__(self):
         self.tiles = [
@@ -25,3 +23,9 @@ class BagTiles:
 
     def put(self, tiles):
         self.tiles.extend(tiles)
+class Player:
+    def __init__(self):
+        self.tiles = []
+
+class Board:
+    pass
