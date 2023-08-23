@@ -28,4 +28,5 @@ class Player:
         self.tiles = []
 
 class Board:
-    pass
+    def __init__(self):
+        self.grid = []
