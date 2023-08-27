@@ -55,7 +55,8 @@ class BagTiles:
         self.tiles.extend(tiles)
 class Player:
     def __init__(self):
-        self.tiles = []
+        self.tiles = BagTiles().take(7)
+
 
 class Cell:
     def __init__(self, multiplier, multiplier_type):
