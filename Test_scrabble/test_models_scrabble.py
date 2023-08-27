@@ -64,7 +64,17 @@ class TestBagTiles(unittest.TestCase):
         
         celda.add_letter(letra)
         self.assertEqual(celda.letter, letra)
-    def test_calculatevalue(self):
-        pass
+    def test_calculatevalue0(self):
+        celda2 = Cell(1,'')
+        self.assertEqual(celda2.calculate_value(), 0)
+    def test_calculatevaluemultilpierletter(self):
+        celda3 = Cell(2, 'letter')
+        celda3.add_letter(Tile('P', 3))
+        self.assertEqual(celda3.calculate_value(), 6)
+    def test_calculatevaluemultilpierword(self):
+        celda4 = Cell(2, 'Word')
+        celda4.add_letter(Tile('P', 3))
+        self.assertEqual(celda4.calculate_value(), 3)
+
 if __name__ == '__main__':
     unittest.main()

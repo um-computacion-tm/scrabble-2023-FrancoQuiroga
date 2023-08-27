@@ -63,7 +63,7 @@ class Cell:
         self.multiplier_type = multiplier_type
         self.letter = None
     def add_letter(self, letter:Tile):
-        self.letter = letter
+        self.letter = letter #(Tile with letter and points)
     def calculate_value(self):
         if self.letter == None:
             return 0

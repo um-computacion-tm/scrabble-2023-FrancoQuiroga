@@ -3,3 +3,5 @@ __pycache__/*
 */__pycache__/*x
 */__pycache__/*
 */env*
+Game/__pycache__/*
+Test_scrabble/__pycache__/*
