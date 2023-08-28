@@ -55,7 +55,12 @@ class BagTiles:
         self.tiles.extend(tiles)
 class Player:
     def __init__(self):
-        self.tiles = BagTiles().take(7)
+        self.INITIALTILES = 7
+        self.tiles = BagTiles().take(self.INITIALTILES)
+
+
+    def refreshtiles(self, tiles_to_add):
+        self.tiles.append(BagTiles().take(tiles_to_add))
 
 
 class Cell:
