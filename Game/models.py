@@ -1,4 +1,13 @@
 import random
+class Calculatewordvalue():
+    def __init__(self):
+        pass
+    def calculatewordvalue(word):
+        finalvalue = 0
+        for i in word:
+            finalvalue += word[i].calculate_value
+
+
 
 class Tile:
     def __init__(self, letter, value):
@@ -57,10 +66,15 @@ class Player:
     def __init__(self):
         self.INITIALTILES = 7
         self.tiles = BagTiles().take(self.INITIALTILES)
-
+    def taketilesfromtilebag(self):
+        self.tiles.pop(BagTiles().put(1))
+        self.tiles.append(BagTiles().take(1))
+        
 
     def refreshtiles(self, tiles_to_add):
-        self.tiles.append(BagTiles().take(tiles_to_add))
+        while tiles_to_add > 0:
+            self.tiles.append(BagTiles().take(tiles_to_add))
+            tiles_to_add -= 1
 
 
 class Cell:
