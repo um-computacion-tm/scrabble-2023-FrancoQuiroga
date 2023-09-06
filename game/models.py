@@ -76,7 +76,8 @@ class Player:
             self.tiles.append(BagTiles().take(tiles_to_add))
             tiles_to_add -= 1
 
-
+class ScrabbleGame:
+    pass
 class Cell:
     def __init__(self, multiplier, multiplier_type):
         self.multiplier = multiplier

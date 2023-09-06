@@ -1,5 +1,5 @@
 import unittest
-from Game.models import (Player, BagTiles)
+from game.models import (Player, BagTiles)
 class TestPlayer(unittest.TestCase):
     def test_init(self):
         player_1 = Player()

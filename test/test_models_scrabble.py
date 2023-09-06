@@ -1,5 +1,5 @@
 import unittest
-from Game.models import (
+from game.models import (
     BagTiles,
     Tile,
     Board,
@@ -37,6 +37,8 @@ class TestTiles(unittest.TestCase):
   #      value = calculatewordvalue(word)
    #     self.assertEqual(value, 7)
 
+class Testmain(unittest.TestCase):
+ pass   
 class TestBagTiles(unittest.TestCase):
     @patch('random.shuffle')
     def test_bag_tiles(self, patch_shuffle):
