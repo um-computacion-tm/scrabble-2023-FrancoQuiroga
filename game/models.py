@@ -1,3 +1,4 @@
+import itertools 
 import random
 class Calculatewordvalue():
     def __init__(self):
@@ -15,43 +16,37 @@ class Tile:
         self.value = value
 class BagTiles:
     def __init__(self):
-        self.tiles = [
-            #tiles de 0 puntos
-            Tile('', 0), Tile('', 0),
-            #tiles de 1 punto
-            Tile('A', 1),Tile('A', 1),Tile('A', 1),Tile('A', 1),Tile('A', 1),Tile('A', 1),
-            Tile('A', 1),Tile('A', 1),Tile('A', 1),Tile('A', 1),Tile('A', 1),Tile('A', 1),
-            Tile('E', 1),Tile('E', 1),Tile('E', 1),Tile('E', 1),
-            Tile('E', 1), Tile('E', 1),Tile('E', 1),Tile('E', 1), Tile('E', 1), Tile('E', 1), Tile('E', 1), Tile('E', 1),
-            Tile('I', 1),Tile('I', 1),Tile('I', 1),Tile('I', 1),Tile('I', 1),Tile('I', 1),
-            Tile('L', 1), Tile('L', 1), Tile('L', 1), Tile('L', 1),
-            Tile('N', 1), Tile('N', 1), Tile('N', 1), Tile('N', 1), Tile('N', 1),
-            Tile('O', 1), Tile('O', 1),Tile('O', 1),Tile('O', 1),Tile('O', 1),Tile('O', 1),
-            Tile('O', 1),Tile('O', 1),Tile('O', 1),
-            Tile('R', 1),Tile('R', 1),Tile('R', 1),Tile('R', 1),Tile('R', 1),
-            Tile('S', 1),Tile('S', 1),Tile('S', 1),Tile('S', 1),Tile('S', 1),Tile('S', 1),
-            Tile('T', 1),Tile('T', 1),Tile('T', 1),Tile('T', 1),
-            Tile('U', 1),Tile('U', 1),Tile('U', 1),Tile('U', 1),Tile('U', 1),
-            #Tile de 2 puntos
-            Tile('D', 2), Tile('D', 2),Tile('D', 2),Tile('D', 2),Tile('D', 2),
-            Tile('G', 2), Tile('G', 2),
-            #Tile de 3 puntos
-            Tile('B', 3), Tile('B', 3),
-            Tile('C', 3), Tile('C', 3),Tile('C', 3),Tile('C', 3),
-            Tile('M', 3),Tile('M', 3),
-            Tile('P', 3),Tile('P', 3),
-            #Tile de 4 puntos
-            Tile('F', 4),
-            Tile('H', 4),Tile('H', 4),
-            Tile('V', 4),
-            Tile('Y', 4),
-            #Tiles de 5 puntos
-            Tile('CH', 5), Tile('CH', 5),
-            #Tiles de 8 puntos
-            Tile('J', 8),Tile('LL', 8),Tile('RR', 8),Tile('Ñ', 8),Tile('X', 8),
-            #Tiles de 10 púntos
-            Tile('Z', 10),
-        ]
+        self.tiles = []
+        self.tiles.append(Tile('', 0) for x in range  (2))
+        self.tiles.append(Tile('A', 1) for x in range(12))
+        self.tiles.append(Tile('E', 1) for x in range(12))
+        self.tiles.append(Tile('I', 1) for x in range(6))
+        self.tiles.append(Tile('L', 1) for x in range(4))
+        self.tiles.append(Tile('N', 1) for x in range(5))
+        self.tiles.append(Tile('O', 1) for x in range(9))
+        self.tiles.append(Tile('R', 1) for x in range(5))
+        self.tiles.append(Tile('S', 1) for x in range(6))
+        self.tiles.append(Tile('T', 1) for x in range(4))
+        self.tiles.append(Tile('U', 1) for x in range(5))
+        self.tiles.append(Tile('D', 2) for x in range(5))
+        self.tiles.append(Tile('G', 2) for x in range(2))
+        self.tiles.append(Tile('B', 3) for x in range(2))
+        self.tiles.append(Tile('C', 3) for x in range(4))
+        self.tiles.append(Tile('M', 3) for x in range(2))
+        self.tiles.append(Tile('P', 3) for x in range(2))
+        self.tiles.append(Tile('F', 4))
+        self.tiles.append(Tile('H', 4) for x in range(2))
+        self.tiles.append(Tile('V', 4))
+        self.tiles.append(Tile('Y', 4))
+        self.tiles.append(Tile('CH', 5))
+        self.tiles.append(Tile('Q', 5))
+        self.tiles.append(Tile('J', 8))
+        self.tiles.append(Tile('LL', 8))
+        self.tiles.append(Tile('Ñ', 8))
+        self.tiles.append(Tile('RR', 8))
+        self.tiles.append(Tile('X', 8))
+        self.tiles.append(Tile('Z', 10))
+        self.tiles = list(itertools.chain(*self.tiles))
         random.shuffle(self.tiles)
 
     def take(self, count):
