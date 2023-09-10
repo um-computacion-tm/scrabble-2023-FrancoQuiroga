@@ -1,12 +1,13 @@
-import itertools 
 import random
 class Calculatewordvalue():
-    def __init__(self):
-        pass
-    def calculatewordvalue(word):
-        finalvalue = 0
-        for i in word:
-            finalvalue += word[i].calculate_value
+    def __init__(self,word):
+        self.word = word
+        self.wordvalue = 0
+    def calculatewordvalue(self):
+        for i in self.word:
+            currentcell = i
+            self.wordvalue += currentcell.calculate_value
+        return self.wordvalue
 
 
 
@@ -46,7 +47,15 @@ class BagTiles:
         self.tiles.append(Tile('RR', 8))
         self.tiles.append(Tile('X', 8))
         self.tiles.append(Tile('Z', 10))
-        self.tiles = list(itertools.chain(*self.tiles))
+        for element1 in self.tiles:
+            if type(element1) == list:
+                for element2 in element1:
+                    self.tiles.append(element2)
+                self.tiles.remove(element1)
+            else:
+                continue
+        
+        
         random.shuffle(self.tiles)
 
     def take(self, count):

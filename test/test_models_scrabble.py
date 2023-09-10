@@ -16,26 +16,27 @@ class TestTiles(unittest.TestCase):
         self.assertEqual(tile.letter, 'A')
         self.assertEqual(tile.value, 1)
 
-"""class TestCalculateWordValue(unittest.TestCase):
+class TestCalculateWordValue(unittest.TestCase):
     def test_word_nomult(self):
         
 
-        word = [Cell().add_letter(Tile('C', 1)), 
-                Cell(letter = Tile('A', 1)),
+        word = [Cell(1,'letter').add_letter(Tile('C', 1)), 
+                Cell(1,'letter').add_letter(Tile('A', 1)),
+                 Cell(1,'letter').add_letter(Tile('S', 2)),
+                 Cell(1,'letter').add_letter(Tile('A', 1)) 
+        ]
+        value = Calculatewordvalue(word)
+        value.calculatewordvalue
+        self.assertEqual(value.wordvalue, 5)
+    def test_word_mult_value(self):
+        word = [Cell(letter = Tile('C', 1)), 
+                Cell(letter = Tile('A', 1), multiplier=3, multiplier_type= 'letter'),
                  Cell(letter = Tile('S', 2)),
                  Cell(letter = Tile('A', 1)) 
+
         ]
-        value = Calculatewordvalue.calculatewordvalue(word)
-        self.assertEqual(value, 5)
-    """#def test_word_mult_value(self):
-        #word = [Cell(letter = Tile('C', 1)), 
-         #       Cell(letter = Tile('A', 1), multiplier=3, multiplier_type= 'letter'),
-          #       Cell(letter = Tile('S', 2)),
-           #      Cell(letter = Tile('A', 1)) 
-#
- #       ]
-  #      value = calculatewordvalue(word)
-   #     self.assertEqual(value, 7)
+        value = Calculatewordvalue(word)
+        self.assertEqual(value, 7)
 
 class Testmain(unittest.TestCase):
  pass   
@@ -77,6 +78,7 @@ class TestBagTiles(unittest.TestCase):
             len(bag.tiles),
             102,
         )
+
     def test_board(self):
         board = Board()
         self.assertEqual(len(board.grid), 15 )
