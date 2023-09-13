@@ -1,12 +1,4 @@
 import random
-class Calculatewordvalue():
-    def __init__(self,word):
-        self.word = word
-        self.wordvalue = 0
-    def calculatewordvalue(self):
-        for i in self.word:
-            if i.multipliertype == 'letter':
-                self.wordvalue += i.Tile().value * i.multiplier
 
 
 class Tile:
@@ -96,3 +88,14 @@ class Board:
     def __init__(self):
         self.grid = [[ Cell(1, '') for _ in range(15) ]
             for _ in range(15)]
+    @staticmethod
+    def calculatewordvalue(word = list[Cell]):
+            wordvalue = 0
+            wordmultiplier = None
+            for cell in word:
+                if cell.multiplier_type == 'letter':
+                    wordvalue += cell.value * cell.multiplier
+                if cell.multiplier_type == 'word':
+                    wordmultiplier = cell.multiplier
+            wordvalue = wordvalue * wordmultiplier
+            return wordvalue
