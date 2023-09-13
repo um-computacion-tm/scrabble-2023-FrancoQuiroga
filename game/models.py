@@ -5,10 +5,8 @@ class Calculatewordvalue():
         self.wordvalue = 0
     def calculatewordvalue(self):
         for i in self.word:
-            currentcell = i
-            self.wordvalue += currentcell.calculate_value
-        return self.wordvalue
-
+            if i.multipliertype == 'letter':
+                self.wordvalue += i.Tile().value * i.multiplier
 
 
 class Tile:
@@ -17,55 +15,53 @@ class Tile:
         self.value = value
 class BagTiles:
     def __init__(self):
-        self.tiles = []
-        self.tiles.append(Tile('', 0) for x in range  (2))
-        self.tiles.append(Tile('A', 1) for x in range(12))
-        self.tiles.append(Tile('E', 1) for x in range(12))
-        self.tiles.append(Tile('I', 1) for x in range(6))
-        self.tiles.append(Tile('L', 1) for x in range(4))
-        self.tiles.append(Tile('N', 1) for x in range(5))
-        self.tiles.append(Tile('O', 1) for x in range(9))
-        self.tiles.append(Tile('R', 1) for x in range(5))
-        self.tiles.append(Tile('S', 1) for x in range(6))
-        self.tiles.append(Tile('T', 1) for x in range(4))
-        self.tiles.append(Tile('U', 1) for x in range(5))
-        self.tiles.append(Tile('D', 2) for x in range(5))
-        self.tiles.append(Tile('G', 2) for x in range(2))
-        self.tiles.append(Tile('B', 3) for x in range(2))
-        self.tiles.append(Tile('C', 3) for x in range(4))
-        self.tiles.append(Tile('M', 3) for x in range(2))
-        self.tiles.append(Tile('P', 3) for x in range(2))
-        self.tiles.append(Tile('F', 4))
-        self.tiles.append(Tile('H', 4) for x in range(2))
-        self.tiles.append(Tile('V', 4))
-        self.tiles.append(Tile('Y', 4))
-        self.tiles.append(Tile('CH', 5))
-        self.tiles.append(Tile('Q', 5))
-        self.tiles.append(Tile('J', 8))
-        self.tiles.append(Tile('LL', 8))
-        self.tiles.append(Tile('Ñ', 8))
-        self.tiles.append(Tile('RR', 8))
-        self.tiles.append(Tile('X', 8))
-        self.tiles.append(Tile('Z', 10))
-        for element1 in self.tiles:
-            if type(element1) == list:
-                for element2 in element1:
-                    self.tiles.append(element2)
-                self.tiles.remove(element1)
-            else:
-                continue
-        
-        
+        self.finaltiles = []
+        self.tiles = [
+            ('', 0, 2),
+            ('A', 1, 12),
+            ('E', 1, 12),
+            ('I', 1, 6),
+            ('L', 1, 4),
+            ('N', 1, 5),
+            ('O', 1, 9),
+            ('R', 1, 5),
+            ('S', 1, 6),
+            ('T', 1, 4),
+            ('U', 1, 5),
+            ('D', 2, 5),
+            ('G', 2, 2),
+            ('B', 3, 2),
+            ('C', 3, 4),
+            ('M', 3, 2),
+            ('P', 3, 2),
+            ('F', 4, 1),
+            ('H', 4, 2),
+            ('V', 4, 1),
+            ('Y', 4, 1),
+            ('CH', 5, 1),
+            ('Q', 5, 1),
+            ('J', 8, 1),
+            ('LL', 8, 1),
+            ('Ñ', 8, 1),
+            ('RR', 8, 1),
+            ('X', 8, 1),
+            ('Z', 10, 1),
+        ]
+        self.finaltiles += self.calculatetiles()        
         random.shuffle(self.tiles)
-
+    def calculatetiles(self):
+        totaltiles = []
+        for letter,value, total in self.tiles:
+            totaltiles.extend([(letter,value)] * total)
+        return totaltiles
     def take(self, count):
         tiles = []
         for _ in range(count):
-            tiles.append(self.tiles.pop())
+            tiles.append(self.finaltiles.pop())
         return tiles
 
     def put(self, tiles):
-        self.tiles.extend(tiles)
+        self.finaltiles.extend(tiles)
 class Player:
     def __init__(self):
         self.INITIALTILES = 7
