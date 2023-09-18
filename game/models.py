@@ -39,7 +39,7 @@ class Player:
     def __init__(self, id):
         self.INITIALTILES = 7
         self.tiles = BagTiles().take(self.INITIALTILES)
-        self.id = id
+        self.playerid = id
     def taketilesfromtilebag(self):
         self.tiles.pop(BagTiles().put(1))
         self.tiles.append(BagTiles().take(1))
@@ -60,10 +60,10 @@ class ScrabbleGame:
     def next_turn():
         pass
 class Cell:
-    def __init__(self, multiplier, multiplier_type):
+    def __init__(self, multiplier, multiplier_type, letter):
         self.multiplier = multiplier
         self.multiplier_type = multiplier_type
-        self.letter = None
+        self.letter = Tile(letter)
     def add_letter(self, letter = Tile):
         self.letter = letter #(Tile with letter and points)
     def calculate_value(self):
@@ -75,14 +75,14 @@ class Cell:
             return self.letter.value
 class Board:
     def __init__(self):
-        self.grid = [[ Cell(1, '') for _ in range(15) ]
+        self.grid = [[ Cell(1, '', ('',0)) for _ in range(15) ]
             for _ in range(15)]
     
     
     @staticmethod
     def calculatewordvalue(word = list[Cell]):
         wordvalue = 0
-        wordmultiplier = None
+        wordmultiplier = 1
         for cell in word:
             wordvalue = wordvalue + Cell(cell.letter.value).calculate_value()
             if Cell(cell).multiplier_type == 'letter':
