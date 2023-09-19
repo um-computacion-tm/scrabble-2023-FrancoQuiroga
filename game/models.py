@@ -60,14 +60,14 @@ class ScrabbleGame:
     def next_turn():
         pass
 class Cell:
-    def __init__(self, multiplier, multiplier_type, letter):
+    def __init__(self, multiplier, multiplier_type, letter = ('',0)):
         self.multiplier = multiplier
         self.multiplier_type = multiplier_type
-        self.letter = Tile(letter)
-    def add_letter(self, letter = Tile):
-        self.letter = letter #(Tile with letter and points)
+        self.letter = Tile(*letter)
+    def add_letter(self, letter):
+        self.letter = Tile(*letter) #(Tile with letter and points)
     def calculate_value(self):
-        if self.letter == None:
+        if self.letter == None: #Código inútil?
             return 0
         if self.multiplier_type == 'letter':
             return self.letter.value * self.multiplier
@@ -83,11 +83,13 @@ class Board:
     def calculatewordvalue(word = list[Cell]):
         wordvalue = 0
         wordmultiplier = 1
-        for cell in word:
-            wordvalue = wordvalue + Cell(cell.letter.value).calculate_value()
-            if Cell(cell).multiplier_type == 'letter':
-                wordvalue += Cell(cell).letter.value * Cell(cell).multiplier
-            if Cell(cell).multiplier_type == 'word':
-                wordmultiplier = Cell(cell).multiplier
+        for cell in word:            
+            lettervalue = 0
+            lettervalue += cell.calculate_value()
+            wordvalue += lettervalue
+            if cell.multiplier_type == 'word':
+                wordmultiplier = cell.multiplier
         wordvalue = wordvalue * wordmultiplier
         return wordvalue
+    
+    

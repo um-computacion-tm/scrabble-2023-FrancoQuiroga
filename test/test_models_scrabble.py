@@ -95,7 +95,8 @@ class TestBagTiles(unittest.TestCase):
         self.assertEqual(celda.multiplier_type, 'letter')
         
         celda.add_letter(letra)
-        self.assertEqual(celda.letter, letra)
+        self.assertEqual(celda.letter.letter, 'A')
+        self.assertEqual(celda.letter.value, 1)
     def test_calculatevalue0(self):
         celda2 = Cell(1,'',('',0))
         self.assertEqual(celda2.calculate_value(), 0)
