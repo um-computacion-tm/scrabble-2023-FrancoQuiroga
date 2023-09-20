@@ -54,11 +54,19 @@ class ScrabbleGame:
     def __init__(self, players_count: int):
        self.board = Board()
        self.bag_tiles = BagTiles()
+       self.current_player = 0
        self.players:list[Player] = []
+       self.turncounter = 0
        for index in range(players_count):
-           self.players.append(Player(bag_tiles=self.bag_tiles,id=index))
-    def next_turn():
-        pass
+           self.players.append(Player(id=index))
+    def next_turn(self):
+        
+        if self.current_player == len(self.players)-1:
+          self.current_player = 0 
+        else:
+            self.current_player += self.current_player + 1 
+        self.turncounter += 1
+
 class Cell:
     def __init__(self, multiplier, multiplier_type, letter = ('',0)):
         self.multiplier = multiplier

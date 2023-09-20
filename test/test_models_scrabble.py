@@ -26,24 +26,26 @@ class TestCalculateWordValue(unittest.TestCase):
                     ]           
         result = Board.calculatewordvalue(word)
         self.assertEqual(result, 5)
-#
-#        word = [Cell(1,'letter').add_letter(Tile('C', 1)), 
-#                Cell(1,'letter').add_letter(Tile('A', 1)),
-#                 Cell(1,'letter').add_letter(Tile('S', 2)),
-#                 Cell(1,'letter').add_letter(Tile('A', 1)) 
-#        ]
-#        value = Board.calculatewordvalue(word)
-#        self.assertEqual(value.wordvalue, 5)
-#    def test_word_mult_value(self):
-#        word = [Cell(letter = Tile('C', 1)), 
-#                Cell(letter = Tile('A', 1), multiplier=3, multiplier_type= 'letter'),
-#                 Cell(letter = Tile('S', 2)),
-#                 Cell(letter = Tile('A', 1)) 
-#
-#        ]
-#        value = Board.calculatewordvalue(word)
-#        self.assertEqual(value, 7)
-#
+    def test_word_mult_value(self):
+        word = [Cell(2, 'word', ('C', 1)),
+                Cell(1, 'letter', ('A', 1)),
+                Cell(1, 'letter', ('S', 2)),
+                Cell(1, 'letter', ('A', 1)),
+
+        ]
+        value = Board.calculatewordvalue(word)
+        self.assertEqual(value, 10)
+    def test_letter_mult_(self):
+        word = [
+            Cell(2, 'letter', ('A', 1)),
+            Cell(1, 'letter', ('U', 1)),
+            Cell(1, 'letter', ('T', 1)),
+            Cell(1, 'letter', ('O', 1))
+                    ]           
+        result = Board.calculatewordvalue(word)
+        self.assertEqual(result, 5)
+
+
 class Testmain(unittest.TestCase):
  pass   
 class TestBagTiles(unittest.TestCase):
