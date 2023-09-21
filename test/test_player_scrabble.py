@@ -8,10 +8,11 @@ class TestPlayer(unittest.TestCase):
         player_2 = Player(2)
         player_2.refreshtiles(2)
         self.assertEqual(len(player_2.tiles), 9)
- #   def test_taketiletilebag(self):
-  #      player_3 = Player()
-#        player_3.taketilesfromtilebag()
- #       self.assertEqual(len(player_3.tiles), 7)
-  #      self.assertEqual(len(BagTiles.tiles), 100)
+    def test_taketiletilebag(self):
+        player_3 = Player(0)
+        bolsaactual = BagTiles()
+        player_3.taketilesfromtilebag()
+        self.assertEqual(len(player_3.tiles), 7)
+        self.assertEqual(len(bolsaactual.finaltiles), 100)
 if __name__ == '__main__':
     unittest

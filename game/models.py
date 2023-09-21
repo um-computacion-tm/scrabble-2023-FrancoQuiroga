@@ -41,7 +41,8 @@ class Player:
         self.tiles = BagTiles().take(self.INITIALTILES)
         self.playerid = id
     def taketilesfromtilebag(self):
-        self.tiles.pop(BagTiles().put(1))
+        tiletoswap = self.tiles.pop()
+        BagTiles().put(tiletoswap)
         self.tiles.append(BagTiles().take(1))
         
 
@@ -66,7 +67,23 @@ class ScrabbleGame:
         else:
             self.current_player += self.current_player + 1 
         self.turncounter += 1
-
+    def validate_word(self, word, location, orientation):
+        self.wordisvalid = False
+        self.wordisvalid = self.board.validate_word_inside_board(word, location, orientation)
+        '''
+            1- Validar que usuario tiene esas letras
+            2- Validar que la palabra entra en el tablero
+            '''
+        
+    def get_words():
+        '''
+        Obtener las posibles palabras que se pueden formar, dada una palabra, ubicacion y orientacion 
+        Preguntar al usuario, por cada una de esas palabras, las que considera reales
+        '''
+    def put_words():
+        '''
+        Modifica el estado del tablero con las palabras consideradas como correctas
+        '''
 class Cell:
     def __init__(self, multiplier, multiplier_type, letter = ('',0)):
         self.multiplier = multiplier
@@ -75,8 +92,6 @@ class Cell:
     def add_letter(self, letter):
         self.letter = Tile(*letter) #(Tile with letter and points)
     def calculate_value(self):
-        if self.letter == None: #Código inútil?
-            return 0
         if self.multiplier_type == 'letter':
             return self.letter.value * self.multiplier
         else:
@@ -85,6 +100,26 @@ class Board:
     def __init__(self):
         self.grid = [[ Cell(1, '', ('',0)) for _ in range(15) ]
             for _ in range(15)]
+        self.is_empty = True
+
+    def validate_boardnotempty(self):
+        for i in self.grid:
+            if i.letter.letter != '':
+                self.is_empty = False
+
+
+
+    def validate_word_inside_board(self, word, location, orientation):
+        position_x = location[0]
+        position_y = location[1]
+        len_word = len(word)
+        if orientation == "H":
+            if position_x + len_word > 15:
+                return True
+            else:
+                return True
+        else:
+            pass
     
     
     @staticmethod
