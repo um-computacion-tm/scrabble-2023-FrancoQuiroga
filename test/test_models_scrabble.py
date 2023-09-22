@@ -9,13 +9,11 @@ from game.models import (
 )
 from unittest.mock import patch
 
-
 class TestTiles(unittest.TestCase):
     def test_tile(self):
         tile = Tile('A', 1)
         self.assertEqual(tile.letter, 'A')
         self.assertEqual(tile.value, 1)
-
 class TestCalculateWordValue(unittest.TestCase):
     def test_word_nomult(self):
         word = [
@@ -31,7 +29,6 @@ class TestCalculateWordValue(unittest.TestCase):
                 Cell(1, 'letter', ('A', 1)),
                 Cell(1, 'letter', ('S', 2)),
                 Cell(1, 'letter', ('A', 1)),
-
         ]
         value = Board.calculatewordvalue(word)
         self.assertEqual(value, 10)
@@ -44,10 +41,6 @@ class TestCalculateWordValue(unittest.TestCase):
                     ]           
         result = Board.calculatewordvalue(word)
         self.assertEqual(result, 5)
-
-
-class Testmain(unittest.TestCase):
- pass   
 class TestBagTiles(unittest.TestCase):
     @patch('random.shuffle')
     def test_bag_tiles(self, patch_shuffle):
@@ -64,8 +57,6 @@ class TestBagTiles(unittest.TestCase):
             patch_shuffle.call_args[0][0],
             bag.tiles,
         )
-
-
     def test_take(self):
         bag = BagTiles()
         tiles = bag.take(2)
@@ -77,16 +68,14 @@ class TestBagTiles(unittest.TestCase):
             len(tiles),
             2,
         )
-
     def test_put(self):
         bag = BagTiles()
-        put_tiles = [Tile('Z', 1), Tile('Y', 1)]
+        put_tiles = [('Z', 1), ('Y', 1)]
         bag.put(put_tiles)
         self.assertEqual(
             len(bag.finaltiles),
             102,
         )
-
     def test_board(self):
         board = Board()
         self.assertEqual(len(board.grid), 15 )
@@ -95,7 +84,6 @@ class TestBagTiles(unittest.TestCase):
         letra = ('A', 1)
         self.assertEqual(celda.multiplier, 2)
         self.assertEqual(celda.multiplier_type, 'letter')
-        
         celda.add_letter(letra)
         self.assertEqual(celda.letter.letter, 'A')
         self.assertEqual(celda.letter.value, 1)

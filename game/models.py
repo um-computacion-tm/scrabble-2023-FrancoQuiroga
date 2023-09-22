@@ -44,13 +44,10 @@ class Player:
         tiletoswap = self.tiles.pop()
         BagTiles().put(tiletoswap)
         self.tiles.append(BagTiles().take(1))
-        
-
     def refreshtiles(self, tiles_to_add):
         while tiles_to_add > 0:
             self.tiles.append(BagTiles().take(tiles_to_add))
             tiles_to_add -= 1
-
 class ScrabbleGame:
     def __init__(self, players_count: int):
        self.board = Board()
@@ -101,27 +98,31 @@ class Board:
         self.grid = [[ Cell(1, '', ('',0)) for _ in range(15) ]
             for _ in range(15)]
         self.is_empty = True
-
     def validate_boardnotempty(self):
-        for i in self.grid:
-            if i.letter.letter != '':
-                self.is_empty = False
-
-
-
+        for row in self.grid:
+            for cell in row:
+                if cell.letter.letter != '':
+                    self.is_empty = False
+                    return
     def validate_word_inside_board(self, word, location, orientation):
         position_x = location[0]
         position_y = location[1]
         len_word = len(word)
         if orientation == "H":
-            if position_x + len_word > 15:
-                return True
-            else:
-                return True
+            if (position_x - 1) + len_word > 15:
+                return False
+#            if (position_x + 1) - len_word < 0:
+#                return False
+# Esta verificación es necesaria o no?
+        if orientation == "V":
+            if (position_y - 1) + len_word > 15:
+                return False
+#            if (position_y + 1) - len_word < 0:
+#                return False
         else:
-            pass
-    
-    
+            return True
+    def validate_word_has_space(self, word, location, orientation):
+        pass
     @staticmethod
     def calculatewordvalue(word = list[Cell]):
         wordvalue = 0
