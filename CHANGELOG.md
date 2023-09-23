@@ -1,5 +1,6 @@
-# [V 1.1.4] 2023/08/21: Added Validation system for ScrabbleGame class.
-### 2023/08/22 Fixed empty board validation, Added word validation (wip).
+# [V 1.1.4] 2023/09/21: Added Validation system for ScrabbleGame class.
+### 2023/09/22 Fixed empty board validation, Added word validation (wip).
+### 2023/09/23 Added new validation method for the position of the word when the board is empty
 # [V 1.1.3] 2023/08/20: Added turn sistem, Added ScrabbleGame class.
 ### Added a turn sistem in Scrabblegame(class),the game can now have different turns for players.
 ### Fixed issues with player(class), that didnt allow the class to have and ID number.

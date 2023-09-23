@@ -98,13 +98,14 @@ class Board:
         self.grid = [[ Cell(1, '', ('',0)) for _ in range(15) ]
             for _ in range(15)]
         self.is_empty = True
-    def validate_boardnotempty(self):
+    def validate_boardnotempty(self): #Verifica si el tablero está vacio o no.
         for row in self.grid:
             for cell in row:
                 if cell.letter.letter != '':
                     self.is_empty = False
                     return
     def validate_word_inside_board(self, word, location, orientation):
+        #Esta función verifica que la palabra entre en el tablero
         position_x = location[0]
         position_y = location[1]
         len_word = len(word)
@@ -121,10 +122,27 @@ class Board:
 #                return False
         else:
             return True
-    def validate_word_has_space(self, word, location, orientation):
-        pass
+    def validate_word_correct_placement(self, word, location, orientation):
+    #Esta función verifica que la palabra este colocada en el centro(Con el tablero vacío), o
+    #adyacente a otra palabra, o que intersecte otra palabra
+        position_x = location[0]
+        position_y = location[1]
+
+        if self.is_empty == True and orientation == 'H' and position_y == 8:
+            if position_x + len(word) >= 8:
+                return True
+            else:
+                return False
+        if self.is_empty == True and orientation == 'V' and position_x == 8:
+            if position_y + len(word) >= 8:
+                return True
+            else:
+                return False
+        else:
+            return False         
     @staticmethod
     def calculatewordvalue(word = list[Cell]):
+        #Calcula el valor de la palabra
         wordvalue = 0
         wordmultiplier = 1
         for cell in word:            
