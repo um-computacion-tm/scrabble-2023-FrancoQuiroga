@@ -21,7 +21,7 @@ class BagTiles:
             ('X', 8, 1), ('Z', 10, 1),
         ]
         self.finaltiles += self.calculatetiles()        
-        random.shuffle(self.tiles)
+        random.shuffle(self.finaltiles)
     def calculatetiles(self):
         totaltiles = []
         for letter,value, total in self.tiles:
@@ -69,7 +69,10 @@ class ScrabbleGame:
         self.wordisvalid = self.board.validate_word_inside_board(word, location, orientation)
         '''
             1- Validar que usuario tiene esas letras
-            2- Validar que la palabra entra en el tablero
+            2- Validar que la palabra entra en el tablero X
+            2.1-Validar que la palabra este junto a otra
+            3-Validar que la palabra existe
+
             '''
         
     def get_words():

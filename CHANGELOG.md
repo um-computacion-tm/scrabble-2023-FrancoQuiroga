@@ -1,14 +1,48 @@
-# [V 1.1.4] 2023/09/21: Added Validation system for ScrabbleGame class.
-### 2023/09/22 Fixed empty board validation, Added word validation (wip).
-### 2023/09/23 Added new validation method for the position of the word when the board is empty
-# [V 1.1.3] 2023/08/20: Added turn sistem, Added ScrabbleGame class.
-### Added a turn sistem in Scrabblegame(class),the game can now have different turns for players.
-### Fixed issues with player(class), that didnt allow the class to have and ID number.
-### Fixed Calculate word value.
-# [V 1.1.2] 2023/09/13: Added new class scrabblegame and changed calculatewordvalue method.
-### 2023/09/19: Changed the way the changelog is setup, fixed calculate word value(wip).
-# [V 1.1.1] 2023/09/11: Reworked the Bagtile class.
-# [V 1.1.0] 2023/08/27: Changed Cell class.
-# [V 1.1.0] 2023/08/26: Added new classes (Cell, Board), Fixed Tilebag class.
-# [V 1.0.0] 2023/08/23: Basic Setup and Class Creation (Tile, Tilebag).
-# Usuario de GitHub: FrancoQuiroga 
+# Usuario de GitHub: FrancoQuiroga
+## [ Unreleased ]
+## [V 1.1.5] 2023/09/27:
+### Added 
+- New test to check if the player has the correct tiles
+### Changed
+- Changelog distribution to follow Semantic Versioning
+- requirements.txt for circleci and CodeClimate
+### Added
+- New test for Player class
+## [V 1.1.4] 2023/09/21: 
+### Added 
+- Validation system for ScrabbleGame class
+- New validation method for the position of the word when the board is empty(2023/09/23)
+###  Fixed 
+- Empty board validation, Added word validation (wip)(2023/09/22). 
+
+## [V 1.1.3] 2023/08/20: 
+### Added
+- Turn sistem, Added ScrabbleGame class.
+- Turn sistem in Scrabblegame(class),the game can now have different turns for players.
+- Turn sistem, Added ScrabbleGame class.
+### Fixed 
+- Issues with player(class), that didnt allow the class to have and ID number.
+- Calculate word value function.
+
+## [V 1.1.2] 2023/09/13: 
+### Added 
+- new class scrabblegame.
+### Changed 
+- Calculatewordvalue method.
+
+- Changed the way the changelog is setup, fixed calculate word value(wip)(2023/09/19).
+
+## [V 1.1.1] 2023/09/11: 
+###Changed 
+- Rewrite Bagtile class.
+
+## [V 1.1.0] 2023/08/27: 
+### Changed
+- Rewrite the Cell class  
+
+## [V 1.1.0] 2023/08/26:
+- Added new classes (Cell, Board), Fixed Tilebag class.
+
+## [V 1.0.0] 2023/08/23: 
+- Basic Setup and Class Creation (Tile, Tilebag).
+ 
