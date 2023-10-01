@@ -15,10 +15,10 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(len(player_3.tiles), 7)
         self.assertEqual(len(bolsaactual.finaltiles), 100)
     def test_inicial(self):
-        player_1 = Player()
+        player_1 = Player(1)
         self.assertEqual(
             len(player_1.tiles),
-            0,
+            7,
         )
     def test_validate_user_has_letters(self):
         bag_tile = BagTiles()

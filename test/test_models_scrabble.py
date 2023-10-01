@@ -55,7 +55,7 @@ class TestBagTiles(unittest.TestCase):
         )
         self.assertEqual(
             patch_shuffle.call_args[0][0],
-            bag.tiles,
+            bag.finaltiles,
         )
     def test_take(self):
         bag = BagTiles()

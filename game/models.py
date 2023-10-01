@@ -64,12 +64,20 @@ class ScrabbleGame:
         else:
             self.current_player += self.current_player + 1 
         self.turncounter += 1
-    def validate_word(self, word, location, orientation):
-        self.wordisvalid = False
-        self.wordisvalid = self.board.validate_word_inside_board(word, location, orientation)
+    def validate_word(self, word, location, orientation): #Necesita sus propios tests
+        self.wordisvalid = True
+        listsofchecks = [self.board.validate_boardnotempty(word, location, orientation),
+                         self.board.validate_word_inside_board(word, location, orientation),
+                          self.board.validate_word_correct_placement(word, location, orientation)]
+        for i in listsofchecks:
+            self.wordisvalid = i
+            if self.wordisvalid == False:
+                return self.wordisvalid 
+            else:
+                continue
         '''
             1- Validar que usuario tiene esas letras
-            2- Validar que la palabra entra en el tablero X
+            2- Validar que la palabra entra en el tablero y que si el tablero está vacio la palabra esté en medio
             2.1-Validar que la palabra este junto a otra
             3-Validar que la palabra existe
 
@@ -77,7 +85,7 @@ class ScrabbleGame:
         
     def get_words():
         '''
-        Obtener las posibles palabras que se pueden formar, dada una palabra, ubicacion y orientacion 
+        Obtener las posibles palabras que se pueden formar, dada una palabra, ubicacion position_y orientacion 
         Preguntar al usuario, por cada una de esas palabras, las que considera reales
         '''
     def put_words():
@@ -130,7 +138,12 @@ class Board:
     #adyacente a otra palabra, o que intersecte otra palabra
         position_x = location[0]
         position_y = location[1]
-
+        if self.is_empty == False:
+            for i in range(len(word)):
+                if (position_x + i > 0 and self.grid[position_x + i][position_y].letter.letter != '') or \
+                (position_x + i < 14 and self.grid[position_x + i + 1][position_y].letter.letter != ''):
+                    return True
+            return False
         if self.is_empty == True and orientation == 'H' and position_y == 8:
             if position_x + len(word) >= 8:
                 return True

@@ -79,4 +79,4 @@ class Testwordinsideword(unittest.TestCase):
         orientation = "H"
         board.validate_boardnotempty()
         word_is_valid = board.validate_word_correct_placement(word, location, orientation)
-        assert word_is_valid == True
+        self.assertTrue(word_is_valid)
