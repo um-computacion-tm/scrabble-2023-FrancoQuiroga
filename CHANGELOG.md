@@ -2,13 +2,16 @@
 ## [ Unreleased ] [V 1.1.5] 2023/09/27:
 
 ### Added 
-- New test to check if the player has the correct tiles (wip)
-- New test for Player class
-- New validation method for the class Scrabblegame (2023/10/1)
+- New test to check if the player has the correct tiles (wip).
+- New test for Player class.
+- New validation method for the class Scrabblegame (2023/10/1).
+- New test.sh file that allows local codeclimate tests.
+
 ### Changed
-- Changelog distribution to follow Semantic Versioning
-- requirements.txt for circleci and CodeClimate
-- Validate_word_placement method to take into account that the board is not empty (2023/10/1)
+- Changelog distribution to follow Semantic Versioning.
+- requirements.txt for circleci and CodeClimate.
+- Validate_word_placement method to take into account that the board is not empty (2023/10/1).
+- .codeclimate.yml to be used with the test.sh file.
 ### Removed
 - Old way of validating the word placement
 
