@@ -22,16 +22,15 @@ class TestPlayer(unittest.TestCase):
         )
     def test_validate_user_has_letters(self):
         bag_tile = BagTiles()
-        bag_tile.tiles = [
+        player = Player(1)
+        player.tiles = [
             ('H', 1),
             ('O', 1),
             ('L', 1),
             ('A', 1),
             ('C', 1),
             ('U', 1),
-            ('M', 1),
-        ]
-        player = Player(bag_tile)
+            ('M', 1),]
         tiles = [
             ('H', 1),
             ('O', 1),
@@ -51,8 +50,16 @@ class TestPlayer(unittest.TestCase):
             ('U', 1),
             ('M', 1),
         ]
-        player = Player(bag_tile)
-        tiles = [
+        tiles =  [('P', 1),
+            ('O', 1),
+            ('L', 1),
+            ('A', 1),
+            ('C', 1),
+            ('U', 1),
+            ('M', 1),
+]
+        player = Player(1)
+        player.tiles = [
             ('H', 1),
             ('O', 1),
             ('L', 1),

@@ -48,6 +48,17 @@ class Player:
         while tiles_to_add > 0:
             self.tiles.append(BagTiles().take(tiles_to_add))
             tiles_to_add -= 1
+    def has_letters(self, tiles):
+        verf_list = []
+        has_letters = False
+        for i in range(len(self.tiles)):
+            if self.tiles not in tiles[i]:
+                continue  
+            else:
+                verf_list.append(i)
+        if verf_list == tiles:
+            has_letters = True 
+                
 class ScrabbleGame:
     def __init__(self, players_count: int):
        self.board = Board()
@@ -109,6 +120,7 @@ class Board:
         self.grid = [[ Cell(1, '', ('',0)) for _ in range(15) ]
             for _ in range(15)]
         self.is_empty = True
+        self.word_is_valid = True
     def validate_boardnotempty(self): #Verifica si el tablero está vacio o no.
         for row in self.grid:
             for cell in row:
@@ -123,14 +135,9 @@ class Board:
         if orientation == "H":
             if (position_x - 1) + len_word > 15:
                 return False
-#            if (position_x + 1) - len_word < 0:
-#                return False
-# Esta verificación es necesaria o no?
         if orientation == "V":
             if (position_y - 1) + len_word > 15:
                 return False
-#            if (position_y + 1) - len_word < 0:
-#                return False
         else:
             return True
     def validate_word_correct_placement(self, word, location, orientation):
@@ -138,24 +145,27 @@ class Board:
     #adyacente a otra palabra, o que intersecte otra palabra
         position_x = location[0]
         position_y = location[1]
+
         if self.is_empty == False:
             for i in range(len(word)):
                 if (position_x + i > 0 and self.grid[position_x + i][position_y].letter.letter != '') or \
                 (position_x + i < 14 and self.grid[position_x + i + 1][position_y].letter.letter != ''):
                     return True
             return False
+
         if self.is_empty == True and orientation == 'H' and position_y == 8:
             if position_x + len(word) >= 8:
-                return True
+                pass
             else:
-                return False
+                self.word_is_valid = False
+
         if self.is_empty == True and orientation == 'V' and position_x == 8:
             if position_y + len(word) >= 8:
-                return True
+                pass
             else:
-                return False
+                self.word_is_valid = False
         else:
-            return False         
+            self.word_is_valid = False         
     @staticmethod
     def calculatewordvalue(word = list[Cell]):
         #Calcula el valor de la palabra
@@ -169,5 +179,3 @@ class Board:
                 wordmultiplier = cell.multiplier
         wordvalue = wordvalue * wordmultiplier
         return wordvalue
-    
-    
