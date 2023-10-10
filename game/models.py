@@ -36,28 +36,40 @@ class BagTiles:
     def put(self, tiles):
         self.finaltiles.extend(tiles)
 class Player:
+
     def __init__(self, id):
         self.INITIALTILES = 7
         self.tiles = BagTiles().take(self.INITIALTILES)
         self.playerid = id
+
     def taketilesfromtilebag(self):
         tiletoswap = self.tiles.pop()
         BagTiles().put(tiletoswap)
         self.tiles.append(BagTiles().take(1))
+
     def refreshtiles(self, tiles_to_add):
         while tiles_to_add > 0:
             self.tiles.append(BagTiles().take(tiles_to_add))
             tiles_to_add -= 1
+
     def has_letters(self, tiles):
-        verf_list = []
-        has_letters = False
-        for i in range(len(self.tiles)):
-            if self.tiles not in tiles[i]:
-                continue  
-            else:
-                verf_list.append(i)
-        if verf_list == tiles:
-            has_letters = True 
+        has_letter = False
+        for i in tiles:
+            if i in self.tiles:
+                has_letter = True
+            if i not in self.tiles:
+                has_letter = False
+                return has_letter
+            return has_letter
+#        verf_list = []
+#        has_letters = False
+#        for i in range(len(self.tiles)):
+#            if self.tiles not in tiles[i]:
+#                continue  
+#            else:
+#                verf_list.append(i)
+#        if verf_list == tiles:
+#            has_letters = True 
                 
 class ScrabbleGame:
     def __init__(self, players_count: int):
