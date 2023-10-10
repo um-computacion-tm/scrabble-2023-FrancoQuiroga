@@ -1,12 +1,4 @@
 import random
-class Calculatewordvalue():
-    def __init__(self):
-        pass
-    def calculatewordvalue(word):
-        finalvalue = 0
-        for i in word:
-            finalvalue += word[i].calculate_value
-
 
 
 class Tile:
@@ -15,84 +7,187 @@ class Tile:
         self.value = value
 class BagTiles:
     def __init__(self):
+        self.finaltiles = []
         self.tiles = [
-            #tiles de 0 puntos
-            Tile('', 0), Tile('', 0),
-            #tiles de 1 punto
-            Tile('A', 1),Tile('A', 1),Tile('A', 1),Tile('A', 1),Tile('A', 1),Tile('A', 1),
-            Tile('A', 1),Tile('A', 1),Tile('A', 1),Tile('A', 1),Tile('A', 1),Tile('A', 1),
-            Tile('E', 1),Tile('E', 1),Tile('E', 1),Tile('E', 1),
-            Tile('E', 1), Tile('E', 1),Tile('E', 1),Tile('E', 1), Tile('E', 1), Tile('E', 1), Tile('E', 1), Tile('E', 1),
-            Tile('I', 1),Tile('I', 1),Tile('I', 1),Tile('I', 1),Tile('I', 1),Tile('I', 1),
-            Tile('L', 1), Tile('L', 1), Tile('L', 1), Tile('L', 1),
-            Tile('N', 1), Tile('N', 1), Tile('N', 1), Tile('N', 1), Tile('N', 1),
-            Tile('O', 1), Tile('O', 1),Tile('O', 1),Tile('O', 1),Tile('O', 1),Tile('O', 1),
-            Tile('O', 1),Tile('O', 1),Tile('O', 1),
-            Tile('R', 1),Tile('R', 1),Tile('R', 1),Tile('R', 1),Tile('R', 1),
-            Tile('S', 1),Tile('S', 1),Tile('S', 1),Tile('S', 1),Tile('S', 1),Tile('S', 1),
-            Tile('T', 1),Tile('T', 1),Tile('T', 1),Tile('T', 1),
-            Tile('U', 1),Tile('U', 1),Tile('U', 1),Tile('U', 1),Tile('U', 1),
-            #Tile de 2 puntos
-            Tile('D', 2), Tile('D', 2),Tile('D', 2),Tile('D', 2),Tile('D', 2),
-            Tile('G', 2), Tile('G', 2),
-            #Tile de 3 puntos
-            Tile('B', 3), Tile('B', 3),
-            Tile('C', 3), Tile('C', 3),Tile('C', 3),Tile('C', 3),
-            Tile('M', 3),Tile('M', 3),
-            Tile('P', 3),Tile('P', 3),
-            #Tile de 4 puntos
-            Tile('F', 4),
-            Tile('H', 4),Tile('H', 4),
-            Tile('V', 4),
-            Tile('Y', 4),
-            #Tiles de 5 puntos
-            Tile('CH', 5), Tile('CH', 5),
-            #Tiles de 8 puntos
-            Tile('J', 8),Tile('LL', 8),Tile('RR', 8),Tile('Ñ', 8),Tile('X', 8),
-            #Tiles de 10 púntos
-            Tile('Z', 10),
+            ('', 0, 2), ('A', 1, 12), ('E', 1, 12),
+            ('I', 1, 6), ('L', 1, 4), ('N', 1, 5),
+            ('O', 1, 9), ('R', 1, 5), ('S', 1, 6),
+            ('T', 1, 4), ('U', 1, 5), ('D', 2, 5),
+            ('G', 2, 2), ('B', 3, 2), ('C', 3, 4),
+            ('M', 3, 2), ('P', 3, 2), ('F', 4, 1),
+            ('H', 4, 2), ('V', 4, 1), ('Y', 4, 1),
+            ('CH', 5, 1), ('Q', 5, 1), ('J', 8, 1),
+            ('LL', 8, 1), ('Ñ', 8, 1), ('RR', 8, 1),
+            ('X', 8, 1), ('Z', 10, 1),
         ]
-        random.shuffle(self.tiles)
-
+        self.finaltiles += self.calculatetiles()        
+        random.shuffle(self.finaltiles)
+    def calculatetiles(self):
+        totaltiles = []
+        for letter,value, total in self.tiles:
+            totaltiles.extend([(letter,value)] * total)
+        return totaltiles
     def take(self, count):
         tiles = []
         for _ in range(count):
-            tiles.append(self.tiles.pop())
+            tiles.append(self.finaltiles.pop())
         return tiles
 
     def put(self, tiles):
-        self.tiles.extend(tiles)
+        self.finaltiles.extend(tiles)
 class Player:
-    def __init__(self):
+
+    def __init__(self, id):
         self.INITIALTILES = 7
         self.tiles = BagTiles().take(self.INITIALTILES)
+        self.playerid = id
+
     def taketilesfromtilebag(self):
-        self.tiles.pop(BagTiles().put(1))
+        tiletoswap = self.tiles.pop()
+        BagTiles().put(tiletoswap)
         self.tiles.append(BagTiles().take(1))
-        
 
     def refreshtiles(self, tiles_to_add):
         while tiles_to_add > 0:
             self.tiles.append(BagTiles().take(tiles_to_add))
             tiles_to_add -= 1
 
+    def has_letters(self, tiles):
+        has_letter = False
+        for i in tiles:
+            if i in self.tiles:
+                has_letter = True
+            if i not in self.tiles:
+                has_letter = False
+                return has_letter
+            return has_letter
+#        verf_list = []
+#        has_letters = False
+#        for i in range(len(self.tiles)):
+#            if self.tiles not in tiles[i]:
+#                continue  
+#            else:
+#                verf_list.append(i)
+#        if verf_list == tiles:
+#            has_letters = True 
+                
 class ScrabbleGame:
-    pass
+    def __init__(self, players_count: int):
+       self.board = Board()
+       self.bag_tiles = BagTiles()
+       self.current_player = 0
+       self.players:list[Player] = []
+       self.turncounter = 0
+       for index in range(players_count):
+           self.players.append(Player(id=index))
+    def next_turn(self):
+        
+        if self.current_player == len(self.players)-1:
+          self.current_player = 0 
+        else:
+            self.current_player += self.current_player + 1 
+        self.turncounter += 1
+    def validate_word(self, word, location, orientation): #Necesita sus propios tests
+        self.wordisvalid = True
+        listsofchecks = [self.board.validate_boardnotempty(word, location, orientation),
+                         self.board.validate_word_inside_board(word, location, orientation),
+                          self.board.validate_word_correct_placement(word, location, orientation)]
+        for i in listsofchecks:
+            self.wordisvalid = i
+            if self.wordisvalid == False:
+                return self.wordisvalid 
+            else:
+                continue
+        '''
+            1- Validar que usuario tiene esas letras
+            2- Validar que la palabra entra en el tablero y que si el tablero está vacio la palabra esté en medio
+            2.1-Validar que la palabra este junto a otra
+            3-Validar que la palabra existe
+
+            '''
+        
+    def get_words():
+        '''
+        Obtener las posibles palabras que se pueden formar, dada una palabra, ubicacion position_y orientacion 
+        Preguntar al usuario, por cada una de esas palabras, las que considera reales
+        '''
+    def put_words():
+        '''
+        Modifica el estado del tablero con las palabras consideradas como correctas
+        '''
 class Cell:
-    def __init__(self, multiplier, multiplier_type):
+    def __init__(self, multiplier, multiplier_type, letter = ('',0)):
         self.multiplier = multiplier
         self.multiplier_type = multiplier_type
-        self.letter = None
-    def add_letter(self, letter:Tile):
-        self.letter = letter #(Tile with letter and points)
+        self.letter = Tile(*letter)
+    def add_letter(self, letter):
+        self.letter = Tile(*letter) #(Tile with letter and points)
     def calculate_value(self):
-        if self.letter == None:
-            return 0
         if self.multiplier_type == 'letter':
             return self.letter.value * self.multiplier
         else:
             return self.letter.value
 class Board:
     def __init__(self):
-        self.grid = [[ Cell(1, '') for _ in range(15) ]
+        self.grid = [[ Cell(1, '', ('',0)) for _ in range(15) ]
             for _ in range(15)]
+        self.is_empty = True
+        self.word_is_valid = True
+    def validate_boardnotempty(self): #Verifica si el tablero está vacio o no.
+        for row in self.grid:
+            for cell in row:
+                if cell.letter.letter != '':
+                    self.is_empty = False
+                    return
+    def validate_word_inside_board(self, word, location, orientation):
+        #Esta función verifica que la palabra entre en el tablero
+        position_x = location[0]
+        position_y = location[1]
+        len_word = len(word)
+        if orientation == "H":
+            if (position_x - 1) + len_word > 15:
+                return False
+        if orientation == "V":
+            if (position_y - 1) + len_word > 15:
+                return False
+        else:
+            return True
+    def validate_word_correct_placement(self, word, location, orientation):
+    #Esta función verifica que la palabra este colocada en el centro(Con el tablero vacío), o
+    #adyacente a otra palabra, o que intersecte otra palabra
+        position_x = location[0]
+        position_y = location[1]
+
+        if self.is_empty == False:
+            for i in range(len(word)):
+                if (position_x + i > 0 and self.grid[position_x + i][position_y].letter.letter != '') or \
+                (position_x + i < 14 and self.grid[position_x + i + 1][position_y].letter.letter != ''):
+                    return True
+            return False
+
+        if self.is_empty == True and orientation == 'H' and position_y == 8:
+            if position_x + len(word) >= 8:
+                pass
+            else:
+                self.word_is_valid = False
+
+        if self.is_empty == True and orientation == 'V' and position_x == 8:
+            if position_y + len(word) >= 8:
+                pass
+            else:
+                self.word_is_valid = False
+        else:
+            self.word_is_valid = False         
+    @staticmethod
+    def calculatewordvalue(word = list[Cell]):
+        #Calcula el valor de la palabra
+        wordvalue = 0
+        wordmultiplier = 1
+        for cell in word:            
+            lettervalue = 0
+            lettervalue += cell.calculate_value()
+            wordvalue += lettervalue
+            if cell.multiplier_type == 'word':
+                wordmultiplier = cell.multiplier
+        wordvalue = wordvalue * wordmultiplier
+        return wordvalue
