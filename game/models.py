@@ -60,16 +60,9 @@ class Player:
             if i not in self.tiles:
                 has_letter = False
                 return has_letter
+            if (i + i) in tiles:
+                has_letter = True 
             return has_letter
-#        verf_list = []
-#        has_letters = False
-#        for i in range(len(self.tiles)):
-#            if self.tiles not in tiles[i]:
-#                continue  
-#            else:
-#                verf_list.append(i)
-#        if verf_list == tiles:
-#            has_letters = True 
                 
 class ScrabbleGame:
     def __init__(self, players_count: int):

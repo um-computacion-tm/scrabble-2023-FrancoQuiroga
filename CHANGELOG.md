@@ -1,5 +1,8 @@
 # Usuario de GitHub: FrancoQuiroga
-## [ Unreleased ] 
+## [ Unreleased ] [V 1.1.6] 2023/10/10:
+
+### Added
+- New test for the class Player, checking for different possibilities
 
 ## [V 1.1.5] 2023/09/27:
 
