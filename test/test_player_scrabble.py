@@ -13,7 +13,8 @@ class TestPlayer(unittest.TestCase):
         bolsaactual = BagTiles()
         player_3.taketilesfromtilebag()
         self.assertEqual(len(player_3.tiles), 7)
-        self.assertEqual(len(bolsaactual.finaltiles), 100)
+        self.assertEqual(len(bolsaactual.finaltiles), 103)
+
     def test_inicial(self):
         player_1 = Player(1)
         self.assertEqual(
@@ -108,26 +109,6 @@ class TestPlayer(unittest.TestCase):
         ]
         is_valid = player.has_letters(tiles)
         self.assertEqual(is_valid, True)
-
-    def test_validate_user_has_not_letters(self):
-        bag_tile = BagTiles()
-        player = Player(1)
-        player.tiles = [
-            ('H', 1),
-            ('O', 1),
-            ('LL', 1),
-            ('A', 1),
-            ('C', 1),
-            ('U', 1),
-            ('M', 1),]
-        tiles = [
-            ('H', 1),
-            ('O', 1),
-            ('L', 1),
-            ('A', 1),
-        ]
-        is_valid = player.has_letters(tiles)
-        self.assertEqual(is_valid, False)
 
 if __name__ == '__main__':
     unittest

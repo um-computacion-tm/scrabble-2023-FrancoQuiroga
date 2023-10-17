@@ -1,23 +1,34 @@
 import random
+#from pyrae import dle
 
+class DictionaryConnectionError(Exception):
+    pass
+class InvalidWordException(Exception):
+    pass
+class InvalidPlaceWordException(Exception):
+    pass
+#dle.set_log_level(log_level='CRITICAL')
 
 class Tile:
     def __init__(self, letter, value):
         self.letter = letter
         self.value = value
+    def __repr__(self):
+        return f"{self.letter}:{self.value}"
+
 class BagTiles:
     def __init__(self):
         self.finaltiles = []
         self.tiles = [
             ('', 0, 2), ('A', 1, 12), ('E', 1, 12),
-            ('I', 1, 6), ('L', 1, 4), ('N', 1, 5),
-            ('O', 1, 9), ('R', 1, 5), ('S', 1, 6),
+            ('I', 1, 6), ('L', 1, 6), ('N', 1, 5),
+            ('O', 1, 9), ('R', 1, 7), ('S', 1, 6),
             ('T', 1, 4), ('U', 1, 5), ('D', 2, 5),
-            ('G', 2, 2), ('B', 3, 2), ('C', 3, 4),
+            ('G', 2, 2), ('B', 3, 2), ('C', 3, 5),
             ('M', 3, 2), ('P', 3, 2), ('F', 4, 1),
-            ('H', 4, 2), ('V', 4, 1), ('Y', 4, 1),
-            ('CH', 5, 1), ('Q', 5, 1), ('J', 8, 1),
-            ('LL', 8, 1), ('Ñ', 8, 1), ('RR', 8, 1),
+            ('H', 4, 3), ('V', 4, 1), ('Y', 4, 1),
+            ('Q', 5, 1), ('J', 8, 1),
+            ('Ñ', 8, 1),
             ('X', 8, 1), ('Z', 10, 1),
         ]
         self.finaltiles += self.calculatetiles()        
@@ -73,6 +84,20 @@ class ScrabbleGame:
        self.turncounter = 0
        for index in range(players_count):
            self.players.append(Player(id=index))
+
+    def play(self, word, location, orientation):
+            self.validate_word(word, location, orientation)
+            words = self.board.put_words(word, location, orientation)
+            total = self.board.calculatewordvalue(words)
+            self.players[self.current_player].score += total
+            self.next_turn()
+
+    def get_board(self,):
+        self.board.show_board(self.board.grid)
+
+    def get_current_player(self):
+        print(self.current_player)
+
     def next_turn(self):
         
         if self.current_player == len(self.players)-1:
@@ -80,18 +105,15 @@ class ScrabbleGame:
         else:
             self.current_player += self.current_player + 1 
         self.turncounter += 1
-    def validate_word(self, word, location, orientation): #Necesita sus propios tests
-        self.wordisvalid = True
-        listsofchecks = [self.board.validate_boardnotempty(word, location, orientation),
-                         self.board.validate_word_inside_board(word, location, orientation),
-                          self.board.validate_word_correct_placement(word, location, orientation)]
-        for i in listsofchecks:
-            self.wordisvalid = i
-            if self.wordisvalid == False:
-                return self.wordisvalid 
-            else:
-                continue
-        '''
+
+    def validate_word(self, word, location, orientation):
+            if not self.board.dict_validate_word(word):
+                raise InvalidWordException("Su palabra no existe en el diccionario")
+            if not self.board.validate_word_inside_board(word, location, orientation):
+                raise InvalidPlaceWordException("Su palabra excede el tablero")
+            if not self.board.validate_word_correct_placement(word, location, orientation):
+                raise InvalidPlaceWordException("Su palabra esta mal puesta en el tablero")
+    '''
             1- Validar que usuario tiene esas letras
             2- Validar que la palabra entra en el tablero y que si el tablero está vacio la palabra esté en medio
             2.1-Validar que la palabra este junto a otra
@@ -120,12 +142,28 @@ class Cell:
             return self.letter.value * self.multiplier
         else:
             return self.letter.value
+    def __repr__(self):
+        if self.letter:
+            return repr(self.letter)
+        if self.multiplier > 1:
+            return f'{"W" if self.multiplier_type == "word" else "L"}x{self.multiplier}'
+        else:
+            return '   '
+        
 class Board:
     def __init__(self):
         self.grid = [[ Cell(1, '', ('',0)) for _ in range(15) ]
             for _ in range(15)]
         self.is_empty = True
         self.word_is_valid = True
+    def show_board(board):
+        print('\n  |' + ''.join([f' {str(row_index).rjust(2)} ' for row_index in range(15)]))
+        for row_index, row in enumerate(board.grid):
+            print(
+                str(row_index).rjust(2) +
+                '| ' +
+                ' '.join([repr(cell) for cell in row])
+            )
     def validate_boardnotempty(self): #Verifica si el tablero está vacio o no.
         for row in self.grid:
             for cell in row:
@@ -171,6 +209,13 @@ class Board:
                 self.word_is_valid = False
         else:
             self.word_is_valid = False         
+    def dict_validate_word(word):
+        search = dle.search_by_word(word=word)
+        if search is None:
+            raise DictionaryConnectionError()
+        return search.meta_description != 'Versión electrónica 23.6 del «Diccionario de la lengua española», obra lexicográfica académica por excelencia.'
+
+
     @staticmethod
     def calculatewordvalue(word = list[Cell]):
         #Calcula el valor de la palabra
