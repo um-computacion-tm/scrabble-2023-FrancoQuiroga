@@ -85,6 +85,12 @@ class ScrabbleGame:
        for index in range(players_count):
            self.players.append(Player(id=index))
 
+    def is_playing(self):
+        return True
+    
+    def finish_game(self):
+        self.is_playing = False
+
     def play(self, word, location, orientation):
             self.validate_word(word, location, orientation)
             words = self.board.put_words(word, location, orientation)
@@ -92,8 +98,8 @@ class ScrabbleGame:
             self.players[self.current_player].score += total
             self.next_turn()
 
-    def get_board(self,):
-        self.board.show_board(self.board.grid)
+    def get_board(self):
+        self.board.show_board()
 
     def get_current_player(self):
         print(self.current_player)
@@ -107,6 +113,7 @@ class ScrabbleGame:
         self.turncounter += 1
 
     def validate_word(self, word, location, orientation):
+            self.board.validate_boardnotempty()
             if not self.board.dict_validate_word(word):
                 raise InvalidWordException("Su palabra no existe en el diccionario")
             if not self.board.validate_word_inside_board(word, location, orientation):
@@ -114,7 +121,7 @@ class ScrabbleGame:
             if not self.board.validate_word_correct_placement(word, location, orientation):
                 raise InvalidPlaceWordException("Su palabra esta mal puesta en el tablero")
     '''
-            1- Validar que usuario tiene esas letras
+            1- Validar que usuario tiene esas letras 
             2- Validar que la palabra entra en el tablero y que si el tablero está vacio la palabra esté en medio
             2.1-Validar que la palabra este junto a otra
             3-Validar que la palabra existe
@@ -155,7 +162,8 @@ class Board:
         self.grid = [[ Cell(1, '', ('',0)) for _ in range(15) ]
             for _ in range(15)]
         self.is_empty = True
-        self.word_is_valid = True
+        self.word_is_valid = False
+
     def show_board(board):
         print('\n  |' + ''.join([f' {str(row_index).rjust(2)} ' for row_index in range(15)]))
         for row_index, row in enumerate(board.grid):
@@ -164,12 +172,14 @@ class Board:
                 '| ' +
                 ' '.join([repr(cell) for cell in row])
             )
+
     def validate_boardnotempty(self): #Verifica si el tablero está vacio o no.
         for row in self.grid:
             for cell in row:
                 if cell.letter.letter != '':
                     self.is_empty = False
                     return
+
     def validate_word_inside_board(self, word, location, orientation):
         #Esta función verifica que la palabra entre en el tablero
         position_x = location[0]
@@ -183,37 +193,32 @@ class Board:
                 return False
         else:
             return True
+
     def validate_word_correct_placement(self, word, location, orientation):
     #Esta función verifica que la palabra este colocada en el centro(Con el tablero vacío), o
     #adyacente a otra palabra, o que intersecte otra palabra
         position_x = location[0]
         position_y = location[1]
 
+        if self.is_empty == True and (position_x == 8 or position_y == 8):
+            self.word_is_valid = True
+
         if self.is_empty == False:
             for i in range(len(word)):
                 if (position_x + i > 0 and self.grid[position_x + i][position_y].letter.letter != '') or \
                 (position_x + i < 14 and self.grid[position_x + i + 1][position_y].letter.letter != ''):
-                    return True
-            return False
+                    self.word_is_valid = True
+            return self.word_is_valid
+                
+       
 
-        if self.is_empty == True and orientation == 'H' and position_y == 8:
-            if position_x + len(word) >= 8:
-                pass
-            else:
-                self.word_is_valid = False
+        return self.word_is_valid
 
-        if self.is_empty == True and orientation == 'V' and position_x == 8:
-            if position_y + len(word) >= 8:
-                pass
-            else:
-                self.word_is_valid = False
-        else:
-            self.word_is_valid = False         
-    def dict_validate_word(word):
-        search = dle.search_by_word(word=word)
-        if search is None:
-            raise DictionaryConnectionError()
-        return search.meta_description != 'Versión electrónica 23.6 del «Diccionario de la lengua española», obra lexicográfica académica por excelencia.'
+#    def dict_validate_word(word):
+#        search = dle.search_by_word(word=word)
+#        if search is None:
+#            raise DictionaryConnectionError()
+#        return search.meta_description != 'Versión electrónica 23.6 del «Diccionario de la lengua española», obra lexicográfica académica por excelencia.'
 
 
     @staticmethod

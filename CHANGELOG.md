@@ -5,10 +5,13 @@
 - New test for the class Player, checking for different possibilities
 - New main.py method that asks the player for inputs (2023/10/17)
 -
+### Changed
+- Validate_word_placement to simplify its complexity
 
 ### Fixed
 - Errors caused by deleting double-letter words (2023/10/17)
-
+- Errors caused by wrong implementation in show_board method
+- main.py to work with tests (wip)
 
 ## [V 1.1.5] 2023/09/27:
 
