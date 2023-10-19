@@ -13,9 +13,9 @@ def get_player_count():
 
 def get_inputs():
     
-    inputs = [input(print("Seleccione la orientación de la palabra ( H / V ): ")), 
-              
-              input(print("Seleccione las coordenadas de la letra inicial (X / Y): ")),
+    inputs = [input(print("Seleccione las coordenadas de la letra inicial (X / Y): ")),
+        
+              input(print("Seleccione la orientación de la palabra ( H / V ): ")),   
 
               input(print("Seleccione la palabra a colocar: ")),
               

@@ -65,15 +65,15 @@ class Player:
 
     def has_letters(self, tiles):
         has_letter = False
+        checkingtiles = self.tiles.copy()
         for i in tiles:
-            if i in self.tiles:
+            if i in checkingtiles:
                 has_letter = True
-            if i not in self.tiles:
+                checkingtiles.remove(i)
+            if i not in checkingtiles:
                 has_letter = False
                 return has_letter
-            if (i + i) in tiles:
-                has_letter = True 
-            return has_letter
+        return has_letter
                 
 class ScrabbleGame:
     def __init__(self, players_count: int):
@@ -89,7 +89,7 @@ class ScrabbleGame:
         return True
     
     def finish_game(self):
-        self.is_playing = False
+        return False
 
     def play(self, word, location, orientation):
             self.validate_word(word, location, orientation)

@@ -1,10 +1,5 @@
 import unittest
-from game.models import (
-    BagTiles,
-    Tile,
-    Board,
-    Cell,
-)
+from game.models import  *
 from unittest.mock import patch
 
 class TestTiles(unittest.TestCase):
@@ -78,9 +73,7 @@ class TestBagTiles(unittest.TestCase):
             105,
         )
 
-    def test_board(self):
-        board = Board()
-        self.assertEqual(len(board.grid), 15 )
+
 
     def test_cell(self):
         celda = Cell(2, 'letter', ('',0))
@@ -104,6 +97,13 @@ class TestBagTiles(unittest.TestCase):
         celda4 = Cell(2, 'Word',('',0))
         celda4.add_letter(('P', 3))
         self.assertEqual(celda4.calculate_value(), 3)
+
+class Testboard (unittest.TestCase):
+    
+    def test_board(self):
+        board = Board()
+        self.assertEqual(len(board.grid), 15 )
+
 
 if __name__ == '__main__':
     unittest.main()
