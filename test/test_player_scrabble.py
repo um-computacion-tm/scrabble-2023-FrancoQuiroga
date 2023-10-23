@@ -1,5 +1,5 @@
 import unittest
-from game.models import (Player, BagTiles)
+from game.models import (Player, BagTiles, Tile)
 class TestPlayer(unittest.TestCase):
     def test_init(self):
         player_1 = Player(1)
@@ -95,21 +95,24 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(is_valid, False)
 
     def test_validate_user_has_letters_2(self):
-        bag_tile = BagTiles()
         player = Player(1)
         player.tiles = [
-            ('O', 1),
-            ('L', 1),
-            ('L', 4),
-            ('A', 1),
-            ('C', 1),
-            ('U', 1),
-            ('M', 1),]
+            Tile(*('V', 1)),
+            Tile(*('A', 1)),
+            Tile(*('L', 1)),
+            Tile(*('L', 1)),
+            Tile(*('Z', 1)),
+            Tile(*('A', 1)),
+            Tile(*('T', 1)),
+
+            ]
         tiles = [
-            ('O', 1),
-            ('L', 1),
-            ('L', 1),
-            ('A', 1),
+            Tile(*('V', 1)),
+            Tile(*('A', 1)),
+            Tile(*('L', 1)),
+            Tile(*('L', 1)),
+            Tile(*('A', 1)),
+
         ]
         is_valid = player.has_letters(tiles)
         self.assertEqual(is_valid, True)
@@ -145,6 +148,29 @@ class TestPlayer(unittest.TestCase):
             ('L', 1),
             ('L', 1),
             ('L', 1),
+
+        ]
+
+        tiles = [
+            ('P', 1),
+            ('A', 1),
+            ('Y', 1),
+            ('Y', 1),
+            ('O', 1),
+        ]
+        is_valid = player.has_letters(tiles)
+        self.assertEqual(is_valid, False)
+
+    def test_player_has_2letters(self):
+        player = Player(1)
+        player.tiles = [
+            ('P', 1),
+            ('A', 1),
+            ('Y', 1),
+            ('O', 1),
+            ('L', 1),
+            ('L', 1),
+            ('Y', 1),
 
         ]
 

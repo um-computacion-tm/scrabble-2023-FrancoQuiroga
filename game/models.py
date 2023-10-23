@@ -64,17 +64,26 @@ class Player:
             tiles_to_add -= 1
 
     def has_letters(self, tiles):
+#        player_letters = [tile.letter for tile in self.tiles]
+#        player_letter_count = {letter: player_letters.count(letter) for letter in set(player_letters)}
+#        for letter in word:
+#            if letter not in player_letter_count or player_letter_count[letter] == 0:
+#                return False
+#            player_letter_count[letter] -= 1
+#        return True
         neededtiles = len(tiles)
         actualtiles = 0
         has_letter = True
         checkingtiles = self.tiles.copy()
+        while len(tiles) < len(checkingtiles):
+            tiles.append(('',0))
+
         for i in checkingtiles:
             if i in tiles and (neededtiles > len(checkingtiles)):
                 actualtiles += 1
                 checkingtiles.remove(i)
-            if i not in tiles and (neededtiles > actualtiles): #Verifies that you dont checks for more tiles than you need
+            if i not in tiles and (neededtiles > actualtiles): #Verifies that you dont check for more tiles than you need
                 has_letter = False
-                return has_letter
         return has_letter
                 
 class ScrabbleGame:
