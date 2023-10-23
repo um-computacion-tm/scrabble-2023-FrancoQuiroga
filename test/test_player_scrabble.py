@@ -37,6 +37,9 @@ class TestPlayer(unittest.TestCase):
             ('O', 1),
             ('L', 1),
             ('A', 1),
+            ('C', 1),
+            ('U', 1),
+            ('M', 1)
         ]
         is_valid = player.has_letters(tiles)
         self.assertEqual(is_valid, True)
@@ -51,7 +54,7 @@ class TestPlayer(unittest.TestCase):
             ('U', 1),
             ('M', 1),
         ]
-        tiles =  [('P', 1),
+        tiles =  [
             ('O', 1),
             ('L', 1),
             ('A', 1),
@@ -110,6 +113,49 @@ class TestPlayer(unittest.TestCase):
         ]
         is_valid = player.has_letters(tiles)
         self.assertEqual(is_valid, True)
+    def test_player_doesnt_have_2letters_plusaddletters(self):
+        player = Player(1)
+        player.tiles = [
+            ('P', 1),
+            ('A', 1),
+            ('Y', 1),
+            ('O', 1),
+            ('L', 1),
+        ]
 
+        tiles = [
+            ('P', 1),
+            ('A', 1),
+            ('Y', 1),
+            ('Y', 1),
+            ('O', 1),
+            
+
+        ]
+        is_valid = player.has_letters(tiles)
+        self.assertEqual(is_valid, False)
+
+    def test_player_doesnt_have_2letters(self):
+        player = Player(1)
+        player.tiles = [
+            ('P', 1),
+            ('A', 1),
+            ('Y', 1),
+            ('O', 1),
+            ('L', 1),
+            ('L', 1),
+            ('L', 1),
+
+        ]
+
+        tiles = [
+            ('P', 1),
+            ('A', 1),
+            ('Y', 1),
+            ('Y', 1),
+            ('O', 1),
+        ]
+        is_valid = player.has_letters(tiles)
+        self.assertEqual(is_valid, False)
 if __name__ == '__main__':
     unittest

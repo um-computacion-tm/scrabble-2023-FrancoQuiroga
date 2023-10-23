@@ -64,13 +64,15 @@ class Player:
             tiles_to_add -= 1
 
     def has_letters(self, tiles):
-        has_letter = False
+        neededtiles = len(tiles)
+        actualtiles = 0
+        has_letter = True
         checkingtiles = self.tiles.copy()
-        for i in tiles:
-            if i in checkingtiles:
-                has_letter = True
+        for i in checkingtiles:
+            if i in tiles and (neededtiles > len(checkingtiles)):
+                actualtiles += 1
                 checkingtiles.remove(i)
-            if i not in checkingtiles:
+            if i not in tiles and (neededtiles > actualtiles): #Verifies that you dont checks for more tiles than you need
                 has_letter = False
                 return has_letter
         return has_letter
