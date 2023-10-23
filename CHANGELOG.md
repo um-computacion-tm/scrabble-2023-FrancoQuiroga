@@ -7,6 +7,7 @@
 -
 ### Changed
 - Validate_word_placement to simplify its complexity
+- has_letters class to take in to account multiple repeated letters
 
 ### Fixed
 - Errors caused by deleting double-letter words (2023/10/17)
