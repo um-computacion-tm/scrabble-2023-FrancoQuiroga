@@ -3,22 +3,22 @@ from game.models import ScrabbleGame
 def get_player_count():
     while True:
         try:
-            player_count = int(input('cantidad de jugadores (1-3): '))
-            if player_count <= 3:
+            player_count = int(input('Ingrese la cantidad de jugadores (1-4): '))
+            if  0 < player_count <= 4 :
                 break
+            else:
+                print('Ingrese un número correcto')
+
         except Exception as e:
-            print('ingrese un numero por favor')
+            print('Ingrese un número por favor')
 
     return player_count
 
 def get_inputs():
     
-    inputs = [input(print("Seleccione las coordenadas de la letra inicial (X / Y): ")),
-        
-              input(print("Seleccione la orientación de la palabra ( H / V ): ")),   
-
-              input(print("Seleccione la palabra a colocar: ")),
-              
+    inputs = [input(print("Seleccione las coordenadas de la letra inicial (X / Y): ",)),
+              input(print("Seleccione la orientación de la palabra ( H / V ): ",)),   
+              input(print("Seleccione la palabra a colocar: ",)),
               ]
     return inputs
 
@@ -33,7 +33,7 @@ def main():
     game = ScrabbleGame(player_count)
     while game.is_playing():
         show_board(game.get_board())
-        show_player(*game.get_current_player())
+        show_player(game.get_current_player())
         word, coords, orientation = get_inputs()
         try:
             game.play(word, coords, orientation)

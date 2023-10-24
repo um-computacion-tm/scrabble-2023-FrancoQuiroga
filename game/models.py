@@ -14,6 +14,8 @@ class Tile:
         self.letter = letter
         self.value = value
     def __repr__(self):
+        if self.letter == '':
+            return f" " 
         return f"{self.letter}:{self.value}"
 
 class BagTiles:
@@ -63,29 +65,16 @@ class Player:
             self.tiles.append(BagTiles().take(tiles_to_add))
             tiles_to_add -= 1
 
-    def has_letters(self, tiles):
-#        player_letters = [tile.letter for tile in self.tiles]
-#        player_letter_count = {letter: player_letters.count(letter) for letter in set(player_letters)}
-#        for letter in word:
-#            if letter not in player_letter_count or player_letter_count[letter] == 0:
-#                return False
-#            player_letter_count[letter] -= 1
-#        return True
-        neededtiles = len(tiles)
-        actualtiles = 0
-        has_letter = True
-        checkingtiles = self.tiles.copy()
-        while len(tiles) < len(checkingtiles):
-            tiles.append(('',0))
+    def has_letters(self, word):
 
-        for i in checkingtiles:
-            if i in tiles and (neededtiles > len(checkingtiles)):
-                actualtiles += 1
-                checkingtiles.remove(i)
-            if i not in tiles and (neededtiles > actualtiles): #Verifies that you dont check for more tiles than you need
-                has_letter = False
-        return has_letter
-                
+        tiles = [tile.letter for tile in self.tiles]
+        for letter in word:
+            if letter in tiles:
+                tiles.remove(letter)
+            else:
+                return False
+        return True
+
 class ScrabbleGame:
     def __init__(self, players_count: int):
        self.board = Board()
@@ -113,7 +102,7 @@ class ScrabbleGame:
         self.board.show_board()
 
     def get_current_player(self):
-        print(self.current_player)
+        print('El jugador actual es: ', self.current_player + 1)
 
     def next_turn(self):
         
@@ -176,12 +165,12 @@ class Board:
         self.word_is_valid = False
 
     def show_board(board):
-        print('\n  |' + ''.join([f' {str(row_index).rjust(2)} ' for row_index in range(15)]))
+        print('\n  |' + ''.join([f'{str(row_index).rjust(2)} |' for row_index in range(15)]))
         for row_index, row in enumerate(board.grid):
             print(
                 str(row_index).rjust(2) +
                 '| ' +
-                ' '.join([repr(cell) for cell in row])
+                '  '.join([repr(cell) for cell in row])
             )
 
     def validate_boardnotempty(self): #Verifica si el tablero está vacio o no.
@@ -211,19 +200,20 @@ class Board:
         position_x = location[0]
         position_y = location[1]
 
-        if self.is_empty == True and (position_x == 8 or position_y == 8):
+        if self.is_empty == True and (position_x == 7 or position_y == 7):
             self.word_is_valid = True
 
-        if self.is_empty == False:
-            for i in range(len(word)):
-                if (position_x + i > 0 and self.grid[position_x + i][position_y].letter.letter != '') or \
-                (position_x + i < 14 and self.grid[position_x + i + 1][position_y].letter.letter != ''):
-                    self.word_is_valid = True
-            return self.word_is_valid
+#        if self.is_empty == False:
+
+#           for i in range(len(word)):
+#                if (position_x + i > 0 and self.grid[position_x + i][position_y].letter.letter != '') or \
+#                (position_x + i < 14 and self.grid[position_x + i + 1][position_y].letter.letter != ''):
+#                    self.word_is_valid = True
+#            return self.word_is_valid
                 
        
 
-        return self.word_is_valid
+#        return self.word_is_valid
 
 #    def dict_validate_word(word):
 #        search = dle.search_by_word(word=word)

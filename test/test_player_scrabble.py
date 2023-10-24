@@ -1,5 +1,5 @@
 import unittest
-from game.models import (Player, BagTiles, Tile)
+from game.models import (Player, BagTiles, Tile )
 class TestPlayer(unittest.TestCase):
     def test_init(self):
         player_1 = Player(1)
@@ -25,50 +25,29 @@ class TestPlayer(unittest.TestCase):
         bag_tile = BagTiles()
         player = Player(1)
         player.tiles = [
-            ('H', 1),
-            ('O', 1),
-            ('L', 1),
-            ('A', 1),
-            ('C', 1),
-            ('U', 1),
-            ('M', 1),]
-        tiles = [
-            ('H', 1),
-            ('O', 1),
-            ('L', 1),
-            ('A', 1),
-            ('C', 1),
-            ('U', 1),
-            ('M', 1)
-        ]
-        is_valid = player.has_letters(tiles)
+            Tile(*('H', 1)),
+            Tile(*('O', 1)),
+            Tile(*('L', 1)),
+            Tile(*('A', 1)),
+            Tile(*('C', 1)),
+            Tile(*('U', 1)),
+            Tile(*('M', 1)),
+            ]
+        word = 'HOLA'
+        is_valid = player.has_letters(word)
         self.assertEqual(is_valid, True)
+
     def test_validate_fail_when_user_has_not_letters(self):
-        bag_tile = BagTiles()
-        bag_tile.finaltiles = [
-            ('P', 1),
-            ('O', 1),
-            ('L', 1),
-            ('A', 1),
-            ('C', 1),
-            ('U', 1),
-            ('M', 1),
-        ]
-        tiles =  [
-            ('O', 1),
-            ('L', 1),
-            ('A', 1),
-            ('C', 1),
-            ('U', 1),
-            ('M', 1),
-]
         player = Player(1)
-        player.tiles = [
-            ('H', 1),
-            ('O', 1),
-            ('L', 1),
-            ('A', 1),
-        ]
+        player.tiles =  [  
+            Tile(*('O', 1)),
+            Tile(*('L', 1)),
+            Tile(*('A', 1)),
+            Tile(*('C', 1)),
+            Tile(*('U', 1)),
+            Tile(*('M', 1)),   ]
+
+        tiles = 'HOLA'
         is_valid = player.has_letters(tiles)
         self.assertEqual(is_valid, False)
 
@@ -78,110 +57,67 @@ class TestPlayer(unittest.TestCase):
         bag_tile = BagTiles()
         player = Player(1)
         player.tiles = [
-            ('O', 1),
-            ('O', 1),
-            ('L', 1),
-            ('A', 1),
-            ('C', 1),
-            ('U', 1),
-            ('M', 1),]
-        tiles = [
-            ('O', 1),
-            ('L', 1),
-            ('L', 1),
-            ('A', 1),
-        ]
+            Tile(*('O', 1)),
+            Tile(*('L', 1)),
+            Tile(*('A', 1)),
+            Tile(*('C', 1)),
+            Tile(*('U', 1)),
+            Tile(*('M', 1)),   ]
+
+        tiles = 'OLLA'
         is_valid = player.has_letters(tiles)
         self.assertEqual(is_valid, False)
 
     def test_validate_user_has_letters_2(self):
         player = Player(1)
         player.tiles = [
-            Tile(*('V', 1)),
-            Tile(*('A', 1)),
-            Tile(*('L', 1)),
-            Tile(*('L', 1)),
-            Tile(*('Z', 1)),
-            Tile(*('A', 1)),
-            Tile(*('T', 1)),
-
-            ]
-        tiles = [
-            Tile(*('V', 1)),
-            Tile(*('A', 1)),
-            Tile(*('L', 1)),
+            Tile(*('O', 1)),
             Tile(*('L', 1)),
             Tile(*('A', 1)),
-
-        ]
-        is_valid = player.has_letters(tiles)
+            Tile(*('L', 1)),
+            Tile(*('U', 1)),
+            Tile(*('M', 1)),   ]
+        word = 'OLLA'
+        is_valid = player.has_letters(word)
         self.assertEqual(is_valid, True)
     def test_player_doesnt_have_2letters_plusaddletters(self):
         player = Player(1)
         player.tiles = [
-            ('P', 1),
-            ('A', 1),
-            ('Y', 1),
-            ('O', 1),
-            ('L', 1),
-        ]
+            Tile(*('O', 1)),
+            Tile(*('L', 1)),
+            Tile(*('A', 1)),
+            Tile(*('C', 1)),
+            Tile(*('U', 1)),
+            Tile(*('M', 1)),   ]
 
-        tiles = [
-            ('P', 1),
-            ('A', 1),
-            ('Y', 1),
-            ('Y', 1),
-            ('O', 1),
-            
-
-        ]
+        tiles = 'OLLA'
         is_valid = player.has_letters(tiles)
         self.assertEqual(is_valid, False)
-
     def test_player_doesnt_have_2letters(self):
-        player = Player(1)
-        player.tiles = [
-            ('P', 1),
-            ('A', 1),
-            ('Y', 1),
-            ('O', 1),
-            ('L', 1),
-            ('L', 1),
-            ('L', 1),
+       player = Player(1)
+       player.tiles = [
+            Tile(*('O', 1)),
+            Tile(*('L', 1)),
+            Tile(*('A', 1)),
+            Tile(*('C', 1)),
+            Tile(*('U', 1)),
+            Tile(*('M', 1)),   ]
 
-        ]
-
-        tiles = [
-            ('P', 1),
-            ('A', 1),
-            ('Y', 1),
-            ('Y', 1),
-            ('O', 1),
-        ]
-        is_valid = player.has_letters(tiles)
-        self.assertEqual(is_valid, False)
+       tiles = 'PALLO'
+       is_valid = player.has_letters(tiles)
+       self.assertEqual(is_valid, False)
 
     def test_player_has_2letters(self):
         player = Player(1)
         player.tiles = [
-            ('P', 1),
-            ('A', 1),
-            ('Y', 1),
-            ('O', 1),
-            ('L', 1),
-            ('L', 1),
-            ('Y', 1),
-
-        ]
-
-        tiles = [
-            ('P', 1),
-            ('A', 1),
-            ('Y', 1),
-            ('Y', 1),
-            ('O', 1),
-        ]
+            Tile(*('O', 1)),
+            Tile(*('L', 1)),
+            Tile(*('A', 1)),
+            Tile(*('L', 1)),
+            Tile(*('U', 1)),
+            Tile(*('M', 1)),   ]
+        tiles = 'OLLA'
         is_valid = player.has_letters(tiles)
-        self.assertEqual(is_valid, False)
+        self.assertEqual(is_valid, True)
 if __name__ == '__main__':
     unittest
