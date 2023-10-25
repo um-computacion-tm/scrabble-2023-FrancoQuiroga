@@ -15,12 +15,35 @@ def get_player_count():
     return player_count
 
 def get_inputs():
+    #Tomar el input de X e Y
+    position = []
+    try:
+        x_input = int(input('Ingrese la coordenada X de la palabra: '))
+        y_input = int(input('Ingrese la coordenada Y de la palabra: '))
+
+        position.append(x_input)
+        position.append(y_input)
+
+    except Exception as e:
+        print('Elija un número, en lo posible entre 0 y 15.')
     
-    inputs = [input(print("Seleccione las coordenadas de la letra inicial (X / Y): ",)),
-              input(print("Seleccione la orientación de la palabra ( H / V ): ",)),   
-              input(print("Seleccione la palabra a colocar: ",)),
-              ]
-    return inputs
+    try:
+        #Tomar el input de la orientación
+        orientacion = str(input('Seleccione la orientación de la palabra ( H/V )'))
+        if (orientacion == 'h') or (orientacion=='v') or (orientacion=='H') or (orientacion=='V'):
+            orientacion.upper
+
+        else:
+            print('Porfavor elija (V o H)')
+    except Exception as e:
+        print('Ingrese una letra correcta (H,V)')
+
+
+#    inputs = [input(print("Seleccione las coordenadas de la letra inicial (X / Y): ",)),
+#              input(print("Seleccione la orientación de la palabra ( H / V ): ",)),   
+#              input(print("Seleccione la palabra a colocar: ",)),
+#              ]
+#    return inputs
 
 def show_board(game):
     game # game.get_board

@@ -4,10 +4,11 @@
 ### Added
 - New test for the class Player, checking for different possibilities
 - New main.py method that asks the player for inputs (2023/10/17)
--
+- 
 ### Changed
 - Validate_word_placement to simplify its complexity
 - has_letters class to take in to account multiple repeated letters
+- Updated get_input main method that has more conditions
 
 ### Fixed
 - Errors caused by deleting double-letter words (2023/10/17)

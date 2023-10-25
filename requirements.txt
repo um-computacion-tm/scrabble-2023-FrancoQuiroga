@@ -1,2 +1,2 @@
-coverage==7.3.0
+coverage==7.3.2
 pyrae==0.1.4
