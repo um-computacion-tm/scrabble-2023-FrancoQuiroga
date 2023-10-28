@@ -82,6 +82,7 @@ class ScrabbleGame:
        self.current_player = 0
        self.players:list[Player] = []
        self.turncounter = 0
+       self.is_playingb = True
        for index in range(players_count):
            self.players.append(Player(id=index))
 
@@ -89,7 +90,9 @@ class ScrabbleGame:
         return True
     
     def finish_game(self):
-        return False
+        self.is_playingb = False
+        return self.is_playingb
+        
 
     def play(self, word, location, orientation):
             self.validate_word(word, location, orientation)
