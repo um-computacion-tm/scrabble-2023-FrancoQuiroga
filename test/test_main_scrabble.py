@@ -32,6 +32,7 @@ class Testmain(unittest.TestCase):
     @patch('builtins.print')
     @patch('game.main.show_player')
     @patch('game.main.show_board')
+    @patch('game.show_menu')
     @patch('game.main.get_player_count', return_value=3)
     @patch('game.main.get_inputs', return_value=((1, 3), 'H', 'CASA'))
     @patch.object(ScrabbleGame, 'is_playing', side_effect=[True, False])

@@ -14,38 +14,50 @@ def get_player_count():
 
     return player_count
 
-def get_inputs():
 
-    
+def orientacion_input():
     while True:
         try:
             orientacion = str(input('Seleccione la orientación de la palabra ( H/V )'))
             if (orientacion == 'h') or (orientacion=='v') or (orientacion=='H') or (orientacion=='V'):
-            #Tomar el input de la orientació
+            #Tomar el input de la orientación y hacerlo uppercase
                 orientacion.upper
+                return orientacion
             else:
                 raise Exception
         except Exception as e:
             print('Ingrese una letra correcta (H,V)')
 
+def word_input():
+    while True:
         try:
             palabra = str(input('Coloque la palabra deseada: '))
+            return palabra        
         except Exception as e:
             print('Coloque solo letras porfavor: ')
             #Tomar el input de X e Y
+
+
+def position_input():
+    while True:
         try:
+            
             position = []
             x_input = int(input('Ingrese la coordenada X de la palabra: '))
             y_input = int(input('Ingrese la coordenada Y de la palabra: '))
             if (0 <= x_input > 14) and (0 <= y_input > 14):
                 position.append(x_input)
                 position.append(y_input)
-#            else :
- #               print('Ingrese un número entre 0 y 14')
+                return position 
+            else:
+               raise Exception
+            
         except Exception as e:
             print('Elija un número, entre 0 y 15.')
+        
 
-        return  position, orientacion, palabra
+def get_inputs():
+        return  position_input(), word_input(), orientacion_input(), 
 
 def show_menu(game):
     print('Elija una opción: ')
@@ -53,18 +65,18 @@ def show_menu(game):
     print('2) Cambiar una ficha')
     print('3) Terminar Juego')
     #   print('4) Guardar juego')  
-    exit = False
-    while not exit:
+    while True:
+        
         try:
-            opcion = int(input(('Su opción:')))
+            opcion = int(input())
             if opcion == 1:
                 break
             elif opcion == 2:
                 game.players[game.current_player].taketilesfromtilebag
-                break
+                #print (FICHAS INTERCAMBIADAS)
+                print ('Fichas Intercambiadas, Vuelva a elegir otra opción.')
             elif opcion == 3:
-                game.finish_game()
-                exit = True
+                return 3
             else:
                 print('Ingrese un número válido(1-2-3)')
         
@@ -87,7 +99,9 @@ def main():
     game = ScrabbleGame(player_count)
     while game.is_playing():
         show_info
-#        show_menu(game)
+        exit_check = show_menu(game)
+        if exit_check == 3:
+                return False
         coords ,word ,orientation  = get_inputs()
         try:
             game.play(word, coords, orientation)

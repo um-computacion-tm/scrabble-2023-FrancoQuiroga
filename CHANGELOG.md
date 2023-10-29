@@ -4,11 +4,13 @@
 ### Added
 - New test for the class Player, checking for different possibilities
 - New main.py method that asks the player for inputs (2023/10/17)
-- 
+- Three new functions to take different inputs
+- New function that acts as a decision menu for each turn
 ### Changed
 - Validate_word_placement to simplify its complexity
 - has_letters class to take in to account multiple repeated letters
 - Updated get_input main method that has more conditions
+- main.py method to fix complexity issues
 
 ### Fixed
 - Errors caused by deleting double-letter words (2023/10/17)
