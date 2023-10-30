@@ -45,7 +45,7 @@ def position_input():
             position = []
             x_input = int(input('Ingrese la coordenada X de la palabra: '))
             y_input = int(input('Ingrese la coordenada Y de la palabra: '))
-            if (0 <= x_input > 14) and (0 <= y_input > 14):
+            if (0 <= x_input < 14) and (0 <= y_input < 14):
                 position.append(x_input)
                 position.append(y_input)
                 return position 
@@ -59,22 +59,37 @@ def position_input():
 def get_inputs():
         return  position_input(), word_input(), orientacion_input(), 
 
+def menu_input_swaptiles(game):
+    game.players[game.current_player].taketilesfromtilebag
+    try:
+        tileswap = int(input('Elija si quiere seguir jugando (1), o terminar el turno(2)'))
+        if tileswap == 1:
+            print ('Fichas Intercambiadas, Vuelva a elegir otra opción.')
+            return 5
+        if tileswap == 2:
+            game.next_turn()
+            return 4
+        else:
+            print('Elija un número correcto (1-2)')
+    #print (FICHAS INTERCAMBIADAS)
+    except Exception as e:
+        print ('Elija un número porfavor')
+
 def show_menu(game):
     print('Elija una opción: ')
     print('1) Jugar una palabra')   
     print('2) Cambiar una ficha')
     print('3) Terminar Juego')
-    #   print('4) Guardar juego')  
+    #print('4) Guardar juego')  
     while True:
         
         try:
             opcion = int(input())
             if opcion == 1:
-                break
+                return 1
             elif opcion == 2:
-                game.players[game.current_player].taketilesfromtilebag
-                #print (FICHAS INTERCAMBIADAS)
-                print ('Fichas Intercambiadas, Vuelva a elegir otra opción.')
+               menu_input_swaptiles(game)
+                
             elif opcion == 3:
                 return 3
             else:
@@ -98,16 +113,24 @@ def main():
     player_count = get_player_count()
     game = ScrabbleGame(player_count)
     while game.is_playing():
-        show_info
+        show_info(game)
         exit_check = show_menu(game)
+        if exit_check == 1:
+            coords ,word ,orientation  = get_inputs()
+            try:
+                game.play(word, coords, orientation)
+            except Exception as e:
+                print(e)
+            game.next_turn()
         if exit_check == 3:
                 return False
-        coords ,word ,orientation  = get_inputs()
-        try:
-            game.play(word, coords, orientation)
-        except Exception as e:
-            print(e)
-        game.next_turn
+        while exit_check == 4:
+            show_info(game)
+            exit_check = show_menu(game)
+        while exit_check == 5:
+            show_info(game)
+            exit_check = show_menu(game)
+
 
 if __name__ == '__main__':
     main()
