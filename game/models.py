@@ -1,5 +1,5 @@
 import random
-#from pyrae import dle
+
 
 class DictionaryConnectionError(Exception):
     pass
@@ -7,7 +7,7 @@ class InvalidWordException(Exception):
     pass
 class InvalidPlaceWordException(Exception):
     pass
-#dle.set_log_level(log_level='CRITICAL')
+
 
 class Tile:
     def __init__(self, letter, value):
@@ -168,7 +168,7 @@ class Board:
         self.word_is_valid = False
 
     def show_board(board):
-        print('\n  |' + ''.join([f'{str(row_index).rjust(2)} |' for row_index in range(15)]))
+        print('\n  |' + ''.join([f'{str(row_index).rjust(2)} | ' for row_index in range(15)]))
         for row_index, row in enumerate(board.grid):
             print(
                 str(row_index).rjust(2) +
@@ -218,12 +218,8 @@ class Board:
 
 #        return self.word_is_valid
 
-#    def dict_validate_word(word):
-#        search = dle.search_by_word(word=word)
-#        if search is None:
-#            raise DictionaryConnectionError()
-#        return search.meta_description != 'Versión electrónica 23.6 del «Diccionario de la lengua española», obra lexicográfica académica por excelencia.'
-
+    def dict_validate_word(word):
+        pass
 
     @staticmethod
     def calculatewordvalue(word = list[Cell]):
