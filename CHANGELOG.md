@@ -11,6 +11,7 @@
 - has_letters class to take in to account multiple repeated letters
 - Updated get_input main method that has more conditions
 - main.py method to fix complexity issues
+- show_menu method to fix complexity issues (Split the function into 2 parts)
 
 ### Fixed
 - Errors caused by deleting double-letter words (2023/10/17)
