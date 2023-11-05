@@ -6,6 +6,8 @@
 - New main.py method that asks the player for inputs (2023/10/17)
 - Three new functions to take different inputs
 - New function that acts as a decision menu for each turn
+- New Scrabblegame method to show the player hand
+- New way to show multipliers on the board
 ### Changed
 - Validate_word_placement to simplify its complexity
 - has_letters class to take in to account multiple repeated letters

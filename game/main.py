@@ -88,7 +88,7 @@ def show_menu(game):
             if opcion == 1:
                 return 1
             elif opcion == 2:
-               menu_input_swaptiles(game)
+               return menu_input_swaptiles(game)
                 
             elif opcion == 3:
                 return 3
@@ -102,12 +102,17 @@ def show_menu(game):
 def show_board(game):
     game # game.get_board
 
+def show_hand(game):
+    game #game.get_player_hand
+
 def show_player(game):
     game # game.get_current_player
 
 def show_info(game):
     show_board(game.get_board())
     show_player(game.get_current_player())
+    show_hand(game.get_player_hand())
+
 
 def main():
     player_count = get_player_count()
@@ -124,10 +129,10 @@ def main():
             game.next_turn()
         if exit_check == 3:
                 return False
-        while exit_check == 4:
+        if exit_check == 4: #Por si el player quiere terminar su turno
             show_info(game)
-            exit_check = show_menu(game)
-        while exit_check == 5:
+            return show_menu(game)
+        while exit_check == 5: #Por si el player quiere seguir jugando
             show_info(game)
             exit_check = show_menu(game)
 

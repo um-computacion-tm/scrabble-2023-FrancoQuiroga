@@ -15,8 +15,8 @@ class Tile:
         self.value = value
     def __repr__(self):
         if self.letter == '':
-            return f" " 
-        return f"{self.letter}:{self.value}"
+            return f"  " 
+        return f"{self.letter}:{self.value} "
 
 class BagTiles:
     def __init__(self):
@@ -83,6 +83,7 @@ class ScrabbleGame:
        self.players:list[Player] = []
        self.turncounter = 0
        self.is_playingb = True
+       self.board.get_multiplier()
        for index in range(players_count):
            self.players.append(Player(id=index))
 
@@ -107,6 +108,8 @@ class ScrabbleGame:
     def get_current_player(self):
         print('El jugador actual es: ', self.current_player + 1)
 
+    def get_player_hand(self):
+        print(f'Tus Fichas(Letra,Puntaje): \n  {self.players[self.current_player].tiles} ')
     def next_turn(self):
         
         if self.current_player == len(self.players)-1:
@@ -153,13 +156,18 @@ class Cell:
         else:
             return self.letter.value
     def __repr__(self):
-        if self.letter:
-            return repr(self.letter)
+        if self.letter == '':
+            return f'{repr(self.letter)}|'
         if self.multiplier > 1:
-            return f'{"W" if self.multiplier_type == "word" else "L"}x{self.multiplier}'
+            return f'{"W" if self.multiplier_type == "word" else "L"}{self.multiplier}|'
         else:
-            return '   '
-        
+            return '  |'
+# Multipliers Constants, these are used in the board class only
+WORDx3 = ((0,0), (7, 0), (14,0), (0, 7), (14, 7), (0, 14), (7, 14), (14,14))
+WORDx2 = ((1,1), (2,2), (3,3), (4,4), (1, 13), (2, 12), (3, 11), (4, 10), (13, 1), (12, 2), (11, 3), (10, 4), (13,13), (12, 12), (11,11), (10,10))
+LETTERx3 = ((1,5), (1, 9), (5,1), (5,5), (5,9), (5,13), (9,1), (9,5), (9,9), (9,13), (13, 5), (13,9))
+LETTERx2 = ((0, 3), (0,11), (2,6), (2,8), (3,0), (3,7), (3,14), (6,2), (6,6), (6,8), (6,12), (7,3), (7,11), (8,2), (8,6), (8,8), (8, 12), (11,0), (11,7), (11,14), (12,6), (12,8), (14, 3), (14, 11))
+
 class Board:
     def __init__(self):
         self.grid = [[ Cell(1, '', ('',0)) for _ in range(15) ]
@@ -168,13 +176,28 @@ class Board:
         self.word_is_valid = False
 
     def show_board(board):
-        print('\n  |' + ''.join([f'{str(row_index).rjust(2)} | ' for row_index in range(15)]))
+        print('\n  |'  +" ".join([f'{str(row_index).rjust(2)}|'for row_index in range(15)]))
         for row_index, row in enumerate(board.grid):
             print(
                 str(row_index).rjust(2) +
-                '| ' +
-                '  '.join([repr(cell) for cell in row])
+                '|' +
+                ' '.join([repr(cell) for cell in row])
             )
+
+    def get_multiplier(self):
+        for i in WORDx3:
+            self.set_multiplier(i, 3, 'word')
+        for i in WORDx2:
+            self.set_multiplier(i, 2, 'word')
+        for i in LETTERx3:
+            self.set_multiplier(i, 3, 'letter')
+        for i in LETTERx2:
+            self.set_multiplier(i, 2, 'letter')
+
+    def set_multiplier(self, coordinates,multiplier, multiplier_type):
+        cell = self.grid[coordinates[0]][coordinates[1]]
+        cell.multiplier = multiplier
+        cell.multiplier_type = multiplier_type
 
     def validate_boardnotempty(self): #Verifica si el tablero está vacio o no.
         for row in self.grid:
@@ -206,9 +229,17 @@ class Board:
         if self.is_empty == True and (position_x == 7 or position_y == 7):
             self.word_is_valid = True
 
-#        if self.is_empty == False:
+        if self.is_empty == False and orientation == 'H':
+#            import ipdb 
+#            ipdb.set_trace()
+            for i in range(len(word)):
+                if self.grid[position_x-1][position_y].letter.letter == '':
+                    self.word_is_valid = False
+                if (self.grid[position_x][position_y + 1].letter.letter or self.grid[position_x][position_y -1].letter.letter) == '':
+                    self.word_is_valid = False
+                return self.word_is_valid
 
-#           for i in range(len(word)):
+#            for i in range(len(word)):
 #                if (position_x + i > 0 and self.grid[position_x + i][position_y].letter.letter != '') or \
 #                (position_x + i < 14 and self.grid[position_x + i + 1][position_y].letter.letter != ''):
 #                    self.word_is_valid = True
@@ -218,7 +249,7 @@ class Board:
 
 #        return self.word_is_valid
 
-    def dict_validate_word(word):
+    def dict_validate_word(self,word,):
         pass
 
     @staticmethod
