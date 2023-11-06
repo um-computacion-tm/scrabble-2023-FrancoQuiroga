@@ -97,6 +97,12 @@ class TestBagTiles(unittest.TestCase):
         celda4 = Cell(2, 'Word',('',0))
         celda4.add_letter(('P', 3))
         self.assertEqual(celda4.calculate_value(), 3)
+class Dictonary(unittest.TestCase):
+    def test_word(self):
+        tablero = Board()
+        word = 'hola'
+        self.assertTrue(tablero.dict_validate_word(word))
+                
 
 class Testboard (unittest.TestCase):
     

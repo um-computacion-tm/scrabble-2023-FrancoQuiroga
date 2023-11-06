@@ -1,5 +1,5 @@
 import random
-
+from game.dictionary import load_dictionary
 
 class DictionaryConnectionError(Exception):
     pass
@@ -55,7 +55,7 @@ class Player:
         self.tiles = BagTiles().take(self.INITIALTILES)
         self.playerid = id
 
-    def taketilesfromtilebag(self):
+    def taketilesfromtilebag(self,):
         tiletoswap = self.tiles.pop()
         BagTiles().put(tiletoswap)
         self.tiles.append(BagTiles().take(1))
@@ -119,7 +119,6 @@ class ScrabbleGame:
         self.turncounter += 1
 
     def validate_word(self, word, location, orientation):
-            self.board.validate_boardnotempty()
             if not self.board.dict_validate_word(word):
                 raise InvalidWordException("Su palabra no existe en el diccionario")
             if not self.board.validate_word_inside_board(word, location, orientation):
@@ -127,10 +126,10 @@ class ScrabbleGame:
             if not self.board.validate_word_correct_placement(word, location, orientation):
                 raise InvalidPlaceWordException("Su palabra esta mal puesta en el tablero")
     '''
-            1- Validar que usuario tiene esas letras 
-            2- Validar que la palabra entra en el tablero y que si el tablero está vacio la palabra esté en medio
+            1- Validar que usuario tiene esas letras -----
+            2- Validar que la palabra entra en el tablero y que si el tablero está vacio la palabra esté en medio--------
             2.1-Validar que la palabra este junto a otra
-            3-Validar que la palabra existe
+            3-Validar que la palabra existe 
 
             '''
         
@@ -223,10 +222,11 @@ class Board:
     def validate_word_correct_placement(self, word, location, orientation):
     #Esta función verifica que la palabra este colocada en el centro(Con el tablero vacío), o
     #adyacente a otra palabra, o que intersecte otra palabra
+        self.validate_boardnotempty()
         position_x = location[0]
         position_y = location[1]
 
-        if self.is_empty == True and (position_x == 7 or position_y == 7):
+        if self.is_empty == True and ((orientation == 'V' and position_x == 7) or (orientation == 'H' and position_y == 7)):
             self.word_is_valid = True
 
         if self.is_empty == False and orientation == 'H':
@@ -249,8 +249,12 @@ class Board:
 
 #        return self.word_is_valid
 
-    def dict_validate_word(self,word,):
-        pass
+    def dict_validate_word(self,word):
+        DICTIONARY = load_dictionary()
+        if word in DICTIONARY:
+            return True
+        else:
+            return False
 
     @staticmethod
     def calculatewordvalue(word = list[Cell]):

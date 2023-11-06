@@ -64,6 +64,7 @@ def menu_input_swaptiles(game):
     try:
         tileswap = int(input('Elija si quiere seguir jugando (1), o terminar el turno(2)'))
         if tileswap == 1:
+            
             print ('Fichas Intercambiadas, Vuelva a elegir otra opción.')
             return 5
         if tileswap == 2:
@@ -120,21 +121,27 @@ def main():
     while game.is_playing():
         show_info(game)
         exit_check = show_menu(game)
+
         if exit_check == 1:
-            coords ,word ,orientation  = get_inputs()
-            try:
-                game.play(word, coords, orientation)
-            except Exception as e:
-                print(e)
-            game.next_turn()
+            while True:
+                try:
+                    coords ,word ,orientation  = get_inputs()
+                    game.play(word, coords, orientation)
+                    return False
+                except Exception as e:
+                    print(e)
+            
         if exit_check == 3:
                 return False
+
         if exit_check == 4: #Por si el player quiere terminar su turno
             show_info(game)
             return show_menu(game)
+
         while exit_check == 5: #Por si el player quiere seguir jugando
             show_info(game)
             exit_check = show_menu(game)
+        game.next_turn()
 
 
 if __name__ == '__main__':
