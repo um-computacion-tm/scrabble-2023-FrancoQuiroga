@@ -85,6 +85,22 @@ class Testwordinsideword(unittest.TestCase):
         
         word_is_valid = board.validate_word_correct_placement(word, location, orientation)
         self.assertTrue(word_is_valid)
+
+    def test_place_word_not_empty_board_vertical_fine(self):
+        board = Board()
+        board.grid[7][7].add_letter(('C', 1))
+        board.grid[7][8].add_letter(('A', 1)) 
+        board.grid[7][9].add_letter(('S', 1)) 
+        board.grid[7][10].add_letter(('A', 1)) 
+        word = "Facultad"
+        location = (7, 6)
+        orientation = "V"
+        board.validate_boardnotempty()
+        
+        word_is_valid = board.validate_word_correct_placement(word, location, orientation)
+        self.assertTrue(word_is_valid)
+
+
     def test_board_multiplier_type_word(self):
         tablero = Board()
         tablero.get_multiplier()

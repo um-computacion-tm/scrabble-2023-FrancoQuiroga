@@ -22,7 +22,7 @@ class BagTiles:
     def __init__(self):
         self.finaltiles = []
         self.tiles = [
-            ('', 0, 2), ('A', 1, 12), ('E', 1, 12),
+            ('', 1, 2), ('A', 1, 12), ('E', 1, 12),
             ('I', 1, 6), ('L', 1, 6), ('N', 1, 5),
             ('O', 1, 9), ('R', 1, 7), ('S', 1, 6),
             ('T', 1, 4), ('U', 1, 5), ('D', 2, 5),
@@ -119,10 +119,11 @@ class ScrabbleGame:
         self.turncounter += 1
 
     def validate_word(self, word, location, orientation):
+            self.board.validate_boardnotempty()
             if not self.board.dict_validate_word(word):
                 raise InvalidWordException("Su palabra no existe en el diccionario")
             if not self.board.validate_word_inside_board(word, location, orientation):
-                raise InvalidPlaceWordException("Su palabra excede el tablero")
+                raise InvalidPlaceWordException("Su palabra excede el tamaño tablero")
             if not self.board.validate_word_correct_placement(word, location, orientation):
                 raise InvalidPlaceWordException("Su palabra esta mal puesta en el tablero")
     '''
@@ -219,27 +220,38 @@ class Board:
         else:
             return True
 
+    def vertical_adjacency_verification(self, position_x, position_y):
+                if (self.grid[position_x-1][position_y].letter.letter == '') or \
+                    (self.grid[position_x+1][position_y].letter.letter == ''):
+                    self.word_is_valid = True
+
+    def horizontal_adjacency_verification(self, position_x, position_y):
+        if (self.grid[position_x][position_y + 1].letter.letter == '') or \
+                    (self.grid[position_x][position_y -1].letter.letter) == '':
+                    self.word_is_valid = True
+                
     def validate_word_correct_placement(self, word, location, orientation):
     #Esta función verifica que la palabra este colocada en el centro(Con el tablero vacío), o
     #adyacente a otra palabra, o que intersecte otra palabra
-        self.validate_boardnotempty()
+        
         position_x = location[0]
         position_y = location[1]
 
-        if self.is_empty == True and ((orientation == 'V' and position_x == 7) or (orientation == 'H' and position_y == 7)):
+        if self.is_empty == True and ((orientation == 'V' and position_y == 7) or \
+                                      (orientation == 'H' and position_x == 7)):
             self.word_is_valid = True
 
         if self.is_empty == False and orientation == 'H':
-#            import ipdb 
-#            ipdb.set_trace()
-            for i in range(len(word)):
-                if self.grid[position_x-1][position_y].letter.letter == '':
-                    self.word_is_valid = False
-                if (self.grid[position_x][position_y + 1].letter.letter or self.grid[position_x][position_y -1].letter.letter) == '':
-                    self.word_is_valid = False
-                return self.word_is_valid
 
-#            for i in range(len(word)):
+
+            for i in range(len(word)):    
+                if orientation == 'V':
+                    self.vertical_adjacency_verification(position_x, position_y)
+                if orientation == 'H':
+                    self.horizontal_adjacency_verification(position_x,position_y)
+                return self.word_is_valid
+                    
+                    #            for i in range(len(word)):
 #                if (position_x + i > 0 and self.grid[position_x + i][position_y].letter.letter != '') or \
 #                (position_x + i < 14 and self.grid[position_x + i + 1][position_y].letter.letter != ''):
 #                    self.word_is_valid = True

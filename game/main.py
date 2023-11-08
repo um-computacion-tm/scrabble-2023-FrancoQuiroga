@@ -114,33 +114,57 @@ def show_info(game):
     show_player(game.get_current_player())
     show_hand(game.get_player_hand())
 
-
-def main():
-    player_count = get_player_count()
-    game = ScrabbleGame(player_count)
-    while game.is_playing():
-        show_info(game)
+def game_play_tree(game):
         exit_check = show_menu(game)
-
         if exit_check == 1:
             while True:
                 try:
                     coords ,word ,orientation  = get_inputs()
                     game.play(word, coords, orientation)
-                    return False
+                    replay = int(input('Quiere jugar de nuevo? (1)Si (2)No:'))
+                    if replay == 1:
+                        continue
+                    if replay == 2:
+                        return False
                 except Exception as e:
                     print(e)
-            
         if exit_check == 3:
                 return False
-
         if exit_check == 4: #Por si el player quiere terminar su turno
             show_info(game)
             return show_menu(game)
-
         while exit_check == 5: #Por si el player quiere seguir jugando
             show_info(game)
             exit_check = show_menu(game)
+            continue
+    
+
+def main():
+    player_count = get_player_count()
+    game = ScrabbleGame(player_count)
+#    exit_boolean = False
+    while game.is_playing():
+        show_info(game)
+        game_play_tree(game)
+ #        
+ #      exit_check = show_menu(game)
+ #       if exit_check == 1:
+ #           while True:
+ #               try:
+ #                   coords ,word ,orientation  = get_inputs()
+ #                   game.play(word, coords, orientation)
+ #                   return exit_boolean
+ #               except Exception as e:
+ #                   print(e)
+ #       if exit_check == 3:
+ #               return exit_boolean
+ #       if exit_check == 4: #Por si el player quiere terminar su turno
+ #           show_info(game)
+ #           return show_menu(game)
+#
+ #       while exit_check == 5: #Por si el player quiere seguir jugando
+ #           show_info(game)
+ #           exit_check = show_menu(game)
         game.next_turn()
 
 
